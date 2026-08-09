@@ -148,7 +148,7 @@ in
         $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot1_Enable    "true"
         $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot1_Filename  "RatchetClank1.ps2"
         $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot2_Enable    "true"
-        $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot2_Filename  "Mcd002.ps2"
+        $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot2_Filename  "Unnamed002.ps2"
     '';
     home.activation.setupDolphin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
