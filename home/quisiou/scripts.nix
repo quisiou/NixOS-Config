@@ -228,5 +228,10 @@ in
         $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"      Settings    ShowFPS     "True"
         $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"      Settings    ShowFTimes  "True"
         $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"      Settings    ShowSpeed   "True"
+
+        # QT.ini file
+        QT_INI="$CONFIG_DIR/Qt.ini"
+        $DRY_RUN_CMD $CRUDINI --set "$QT_INI"       userstyle    enabled    "false"
+        $DRY_RUN_CMD $CRUDINI --set "$QT_INI"       userstyle    styletype  5
     '';
 }
