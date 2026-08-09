@@ -50,6 +50,7 @@
         hyprshot wl-clipboard cliphist
         awww eww quickshell
         wlopm
+        pavucontrol
 
         # Language support and LSP
         clang-tools
