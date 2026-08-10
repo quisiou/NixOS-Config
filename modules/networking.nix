@@ -3,7 +3,11 @@
 { config, pkgs, lib, ... }:
 
 {
-    networking.wireless.iwd.enable = true;
-    networking.networkmanager.enable = true;
-    networking.networkmanager.wifi.backend = "iwd";
+    networking = {
+        wireless.iwd.enable = true;
+        networkmanager = {
+            enable = true;
+            wifi.backend = "iwd";
+        };
+    };
 }

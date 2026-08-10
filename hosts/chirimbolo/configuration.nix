@@ -14,7 +14,6 @@
 
         # Modules
         ../../modules/audio.nix
-        ../../modules/bluetooth.nix
         ../../modules/boot.nix
         ../../modules/fonts.nix
         ../../modules/gc.nix

@@ -35,8 +35,5 @@
                 allow id 1d6b:0003
             '';
         };
-        udev.extraRules = ''
-            KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"
-        '';
     };
 }

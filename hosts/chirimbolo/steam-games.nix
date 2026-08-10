@@ -44,6 +44,10 @@
             };
 
             "God of War" = {
+                # To fix Dualsense not getting detected, add this to
+                # ~/.steam/steam/steamapps/compatdata/1593500/pfx/system.reg:
+                # [System\\ControlSet001\\Services\\winebus] 1767307594
+                # "DisableHidraw"=dword:00000001
                 id = 1593500;
                 compatTool = pkgs.ge-proton10-28;
                 launchOptions = {
