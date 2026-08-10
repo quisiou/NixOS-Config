@@ -59,8 +59,9 @@
             mkdir -p $out/bin
             ln -s ${qt6.qtdeclarative}/bin/qmlls $out/bin/qmlls
         '') # Qt's QML lsp
-        
+
         # Other stuff
         bitwarden-desktop
+        qbittorrent
     ];
 }
