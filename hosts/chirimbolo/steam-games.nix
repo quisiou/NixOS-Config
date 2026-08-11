@@ -59,6 +59,9 @@
                         PROTON_ENABLE_NGX_UPDATER = 1;
                     };
                     wrappers = [ "gamemoderun" ];
+                    preHook = ''
+                        python3 "$HOME/.scripts/check_gow2018_hidraw.py"
+                    '';
                 };
             };
         };

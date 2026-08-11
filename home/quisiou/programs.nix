@@ -121,6 +121,11 @@ in
                             name = "GitHub";
                             url = "https://github.com";
                         }
+                        "separator"
+                        {
+                            name = "Movies (torrent)";
+                            url = "https://yts.gg/";
+                        }
                     ];
                 }];
             };
