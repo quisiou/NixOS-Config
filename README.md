@@ -7,7 +7,6 @@
 ---
 
 ### TODO
-- Fix Steam games not detecting controller input, even though all emulators do.
 - Make ryujinx not overwrite my default settings.
 - Add language dictionaries and other add-ons to firefox.
 - Set up UEFI control without Win11 (and set battery limit to 80/85%)

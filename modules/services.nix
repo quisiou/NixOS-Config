@@ -7,6 +7,14 @@
         blueman.enable = true;
         avahi.enable = true;
         printing.enable = true;     # CUPS
+        pipewire = {    # Sound
+            enable = true;
+            alsa.enable = true;
+            alsa.support32Bit = true;
+            pulse.enable = true;
+            jack.enable = true;
+            wireplumber.enable = true;
+        };
         usbguard = {
             enable = true;
             rules = ''

@@ -13,7 +13,6 @@
         ./hardware-configuration.nix
 
         # Modules
-        ../../modules/audio.nix
         ../../modules/boot.nix
         ../../modules/fonts.nix
         ../../modules/gc.nix
@@ -22,6 +21,7 @@
         ../../modules/networking.nix
         ../../modules/packages.nix
         ../../modules/programs.nix
+        ../../modules/security.nix
         ../../modules/services.nix
         ../../modules/users.nix
 
@@ -76,9 +76,6 @@
 
     # --- Networking hostname --------------------------------------------
     networking.hostName = "chirimbolo";
-
-    # --- Security -------------------------------------------------------
-    security.polkit.enable = true;
 
 
     # --- System state version -------------------------------------------
