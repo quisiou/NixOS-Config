@@ -64,20 +64,17 @@
                 #!/usr/bin/env sh
                 set -e
 
+                echo "$(date): wrapper invoked with args: $@" >> "$HOME/.scripts/wrapper.log"
+
                 mkdir -p "$HOME/Videos/RocketLeague"
 
-                gpu-screen-recorder \
-                    -w eDP-1 \
-                    -a default_output -ac opus \
-                    -q very_high -k av1_10bit -cr limited -f 120 -fm cfr \
-                    -o "$HOME/Videos/RocketLeague/" -c mp4 -r 30 &
-                recorder_pid=$!
+                systemctl --user start gsr-rl-replay.service
+                echo "$(date): requested recorder start via systemctl" >> "$HOME/.scripts/wrapper.log"
 
                 "$@"
                 game_exit=$?
 
-                kill -INT "$recorder_pid" 2>/dev/null || true
-                wait "$recorder_pid" 2>/dev/null || true
+                systemctl --user stop gsr-rl-replay.service 2>/dev/null || true
 
                 exit "$game_exit"
             '';

@@ -10,6 +10,5 @@
 - Make ryujinx not overwrite my default settings.
 - Add language dictionaries and other add-ons to firefox.
 - Set up UEFI control without Win11 (and set battery limit to 80/85%)
-- Set NixOS config for GSR replay to run as script only when games are running (OBS for normal recordings).
 - (Maybe) Add keyring to insert github SSH once per session.
 - (Linux 7.2) Setup webcam.
