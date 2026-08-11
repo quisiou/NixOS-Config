@@ -57,5 +57,30 @@
                 with open(regPath, "w", encoding="utf-8") as f: # Only write to file if insertion was made; no need otherwise
                     f.writelines(lines)
         '';
+
+        ".scripts/rl_replay_wrapper.sh" = {
+            executable = true;
+            text = ''
+                #!/usr/bin/env sh
+                set -e
+
+                mkdir -p "$HOME/Videos/RocketLeague"
+
+                gpu-screen-recorder \
+                    -w eDP-1 \
+                    -a default_output -ac opus \
+                    -q very_high -k av1_10bit -cr limited -f 120 -fm cfr \
+                    -o "$HOME/Videos/RocketLeague/" -c mp4 -r 30 &
+                recorder_pid=$!
+
+                "$@"
+                game_exit=$?
+
+                kill -INT "$recorder_pid" 2>/dev/null || true
+                wait "$recorder_pid" 2>/dev/null || true
+
+                exit "$game_exit"
+            '';
+        };
     };
 }

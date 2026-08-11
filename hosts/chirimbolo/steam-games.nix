@@ -1,6 +1,6 @@
 # hosts/chirimbolo/steam-games.nix
 
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
     programs.steam.config = {
@@ -22,7 +22,10 @@
                         __NV_PRIME_RENDER_OFFLOAD = 1;
                         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
                     };
-                    wrappers = [ "gamemoderun" ];
+                    wrappers = [
+                        "gamemoderun"
+                        "${config.home-manager.users.quisiou.home.homeDirectory}/.scripts/rl_replay_wrapper.sh"
+                    ];
                     args = [ "-NoIPv6" ];
                 };
             };
