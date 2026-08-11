@@ -66,15 +66,15 @@
 
                 echo "$(date): wrapper invoked with args: $@" >> "$HOME/.scripts/wrapper.log"
 
-                mkdir -p "$HOME/Videos/RocketLeague"
+                mkdir -p "$HOME/Videos/Clips"
 
-                systemctl --user start gsr-rl-replay.service
+                systemctl --user start gsr-replay@30.service
                 echo "$(date): requested recorder start via systemctl" >> "$HOME/.scripts/wrapper.log"
 
                 "$@"
                 game_exit=$?
 
-                systemctl --user stop gsr-rl-replay.service 2>/dev/null || true
+                systemctl --user stop gsr-replay@30.service 2>/dev/null || true
 
                 exit "$game_exit"
             '';

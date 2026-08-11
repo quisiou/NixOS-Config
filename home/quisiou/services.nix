@@ -7,7 +7,7 @@
     services.ssh-agent.enable = true;
 
     systemd.user.services = {
-        dotfiles-clone = {
+        "dotfiles-clone" = {
             Unit = {
                 Description = "Clone dotfiles repository from github";
                 ConditionPathExists = "!${config.home.homeDirectory}/Dotfiles/.git";
@@ -40,7 +40,7 @@
             Install.WantedBy = [ "default.target" ];
         };
 
-        dotfiles-setup = {
+        "dotfiles-setup" = {
             Unit = {
                 Description = "Set up dotfiles";
             };
@@ -67,7 +67,7 @@
             };
         };
 
-        gsr-rl-replay = {
+        "gsr-replay@" = {
             Unit = {
                 Description = "GPU Screen Recorder instant replay buffer for rocket league (on-demand)";
                 After = [ "graphical-session.target" ];
@@ -79,7 +79,7 @@
                     -w eDP-1 \
                     -a default_output -ac opus \
                     -q very_high -k av1_10bit -cr limited -f 120 -fm cfr \
-                    -o "%h/Videos/RocketLeague/" -c mp4 -r 30
+                    -o "%h/Videos/Clips/" -c mp4 -r %i
                 '';
             };
         };

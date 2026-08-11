@@ -51,6 +51,7 @@
         awww eww quickshell
         wlopm
         pavucontrol
+        libnotify
 
         # Language support and LSP
         clang-tools
