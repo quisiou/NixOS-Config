@@ -16,9 +16,11 @@
         ./xdg-mime.nix
     ];
 
-    home.username = "quisiou";
-    home.homeDirectory = "/home/quisiou";
-    home.stateVersion = "26.05";
+    home = {
+        username = "quisiou";
+        homeDirectory = "/home/quisiou";
+        stateVersion = "26.05";
+    };
 
     programs.home-manager.enable = true;
 }
