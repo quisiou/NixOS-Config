@@ -73,7 +73,7 @@ in
             enable = true;
             settings = {
                 user = {
-                    name = "QuiSioU";
+                    name = "quisiou";
                     email = "marco.casteleiro@gmail.com";
                 };
             };

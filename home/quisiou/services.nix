@@ -25,7 +25,7 @@
 
                     # Initialize Git in-place
                     ${pkgs.git}/bin/git init
-                    ${pkgs.git}/bin/git remote add origin https://github.com/QuiSioU/Dotfiles.git
+                    ${pkgs.git}/bin/git remote add origin https://github.com/quisiou/Dotfiles.git
 
                     # Fetch remote refs
                     ${pkgs.git}/bin/git fetch origin
