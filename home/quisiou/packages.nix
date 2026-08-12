@@ -55,7 +55,7 @@
 
         # Language support and LSP
         clang-tools
-        texlive.combined.scheme-medium
+        texliveMedium
         (runCommand "qmlls" { } ''
             mkdir -p $out/bin
             ln -s ${qt6.qtdeclarative}/bin/qmlls $out/bin/qmlls
