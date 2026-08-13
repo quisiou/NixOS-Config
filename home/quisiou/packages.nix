@@ -6,7 +6,7 @@
 {
     home.packages = with pkgs; [
         # Basic terminal utilities
-        file bat duf dust tree ffmpeg jq poppler fd ripgrep fzf zoxide resvg imagemagick
+        file bat duf dust tree ffmpeg jq yq-go poppler fd ripgrep fzf zoxide resvg imagemagick
         _7zz-rar
 
         # More relevant terminal utils
@@ -36,7 +36,7 @@
 
         # Emulators
         pcsx2
-        # rpcs3     # Still broken, wait a bit before adding it
+        rpcs3
         dolphin-emu
         ryubing
 

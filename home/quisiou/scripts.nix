@@ -5,77 +5,6 @@
 {
     home.activation = {
         # Emulator setup scripts
-        "setupRyujinx" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
-            TARGET_DIR="$APP_FILES_DIR/Ryujinx"
-            COMPLETION_FILE="$TARGET_DIR/.download_completed"
-            TAR_GZ_FILENAME="$TARGET_DIR/ryujinx-meta-files.tar.gz"
-            CONFIG_KEYS_DIR="${config.home.homeDirectory}/.config/Ryujinx/system/"
-            CONFIG_FIRMWARE_DIR="${config.home.homeDirectory}/.config/Ryujinx/bis/system/Contents/registered/"
-            GAMES_DIR="$TARGET_DIR/games"
-            MODS_DIR="$TARGET_DIR/mods"
-            SAVES_DIR="$TARGET_DIR/saves"
-            CONFIG_FILE="${config.home.homeDirectory}/.config/Ryujinx/Config.json"
-            CONFIG_SAVES_DIR="${config.home.homeDirectory}/.config/Ryujinx/bis/user/save"
-            CONFIG_MODS_DIR="${config.home.homeDirectory}/.config/Ryujinx/mods/contents"
-
-            if [ ! -f "$COMPLETION_FILE" ]; then
-                export PATH="${pkgs.gnutar}/bin:${pkgs.gzip}/bin:$PATH"
-
-                $DRY_RUN_CMD echo "Downloading Ryujinx meta files from Google Drive..."
-
-                $DRY_RUN_CMD mkdir -p "$TARGET_DIR"
-                
-                $DRY_RUN_CMD ${pkgs.nix}/bin/nix-shell -p python3Packages.gdown \
-                    --run "gdown 'https://drive.google.com/uc?id=1s6fLOsalUYLnsMQC8785-CqfVLqIWegr' -O '$TAR_GZ_FILENAME'" \
-                    && tar -xzf "$TAR_GZ_FILENAME" -C "$TARGET_DIR" \
-                    && rm "$TAR_GZ_FILENAME" \
-                    && touch "$COMPLETION_FILE"
-            fi
-
-            if [ -f "$COMPLETION_FILE" ]; then
-                $DRY_RUN_CMD echo "Linking keys..."
-                $DRY_RUN_CMD mkdir -p "$CONFIG_KEYS_DIR"
-                for key in "$TARGET_DIR"/keys/*; do
-                    if [ -e "$key" ]; then
-                        $DRY_RUN_CMD ln -sf "$key" "$CONFIG_KEYS_DIR"
-                    fi
-                done
-
-                $DRY_RUN_CMD echo "Linking firmware..."
-                $DRY_RUN_CMD mkdir -p "$CONFIG_FIRMWARE_DIR"
-                for fw in "$TARGET_DIR"/firmware/*; do
-                    if [ -e "$fw" ]; then
-                        $DRY_RUN_CMD ln -sf "$fw" "$CONFIG_FIRMWARE_DIR"
-                    fi
-                done
-
-                $DRY_RUN_CMD echo "Creating games directory..."
-                $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
-                if [ -f "$CONFIG_FILE" ]; then
-                    $DRY_RUN_CMD echo "Updating game_dirs in Ryujinx Config.json..."
-                    TMP_FILE=$(mktemp)
-                    ${pkgs.jq}/bin/jq --arg dir "$GAMES_DIR" '.game_dirs = [$dir]' "$CONFIG_FILE" > "$TMP_FILE" \
-                        && mv "$TMP_FILE" "$CONFIG_FILE"
-                fi
-
-                $DRY_RUN_CMD echo "Creating saves directory..."
-                $DRY_RUN_CMD mkdir -p "$SAVES_DIR"
-                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_SAVES_DIR")"
-                if [ -d "$CONFIG_SAVES_DIR" ] && [ ! -L "$CONFIG_SAVES_DIR" ]; then
-                    $DRY_RUN_CMD rm -rf "$CONFIG_SAVES_DIR"
-                fi
-                $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
-
-                $DRY_RUN_CMD echo "Creating mods directory..."
-                $DRY_RUN_CMD mkdir -p "$MODS_DIR"
-                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_MODS_DIR")"
-                if [ -d "$CONFIG_MODS_DIR" ] && [ ! -L "$CONFIG_MODS_DIR" ]; then
-                    $DRY_RUN_CMD rm -rf "$CONFIG_MODS_DIR"
-                fi
-                $DRY_RUN_CMD ln -sfn "$MODS_DIR" "$CONFIG_MODS_DIR"
-            fi
-        '';
         "setupPCSX2" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
             TARGET_DIR="$APP_FILES_DIR/PCSX2"
@@ -180,6 +109,63 @@
             $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        LargeMotor              "SDL-0/LargeMotor"
             $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        SmallMotor              "SDL-0/SmallMotor"
         '';
+        "setupRPCS3" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
+            TARGET_DIR="$APP_FILES_DIR/RPCS3"
+            FIRMWARE_URL="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2026_0318_a2b60b6ac1d2e49e230144345616927c/PS3UPDAT.PUP"
+            COMPLETION_FILE="$TARGET_DIR/.download_completed"
+            GAMES_DIR="$TARGET_DIR/games"
+            SAVES_DIR="$TARGET_DIR/saves"
+            CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/rpcs3/games"
+            CONFIG_SAVES_DIR="${config.home.homeDirectory}/.config/rpcs3/dev_hdd0/home/00000001/savedata"
+
+            if [ ! -f "$COMPLETION_FILE" ]; then
+                $DRY_RUN_CMD mkdir -p "$TARGET_DIR"
+
+                $DRY_RUN_CMD echo "Downloading PS3 firmware from Sony's official site..."
+                $DRY_RUN_CMD ${pkgs.wget}/bin/wget -O "$TARGET_DIR/PS3UPDAT.PUP" "$FIRMWARE_URL" \
+                    && touch "$COMPLETION_FILE"
+            fi
+
+            if [ -f "$COMPLETION_FILE" ]; then
+                $DRY_RUN_CMD mkdir -p "$GAMES_DIR"  
+                $DRY_RUN_CMD echo "Linking games directory..."
+                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_GAMES_DIR")"
+                if [ -d "$CONFIG_GAMES_DIR" ] && [ ! -L "$CONFIG_GAMES_DIR" ]; then
+                    $DRY_RUN_CMD rm -rf "$CONFIG_GAMES_DIR"
+                fi
+                $DRY_RUN_CMD ln -sfn "$GAMES_DIR" "$CONFIG_GAMES_DIR"
+
+                $DRY_RUN_CMD mkdir -p "$SAVES_DIR"
+                $DRY_RUN_CMD echo "Linking saves directory..."
+                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_SAVES_DIR")"
+                if [ -d "$CONFIG_SAVES_DIR" ] && [ ! -L "$CONFIG_SAVES_DIR" ]; then
+                    $DRY_RUN_CMD rm -rf "$CONFIG_SAVES_DIR"
+                fi
+                $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
+            fi
+
+            # config.yml file
+            CONFIG_YML="${config.home.homeDirectory}/.config/rpcs3/config.yml"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_YML")"
+            ${pkgs.yq-go}/bin/yq -i '
+                .Audio.Renderer                         = "Cubeb" |
+                .Core["PPU Decoder"]                    = "Recompiler (LLVM)" |
+                .Core["SPU Decoder"]                    = "Recompiler (LLVM)" |
+                .Core["Preferred SPU Threads"]          = 0 |
+                .Core["SPU Cache"]                      = "true" |
+                .Core["SPU loop detection"]             = "true" |
+                .Video["Anisotropic Filter Override"]   = 16 |
+                .Video["Frame limit"]                   = "Off" |
+                .Video["Multithreaded RSX"]             = "true" |
+                .Video.Renderer                         = "Vulkan" |
+                .Video["VSync Mode"]                    = "Disabled" |
+                .Video.Vulkan.Adapter                   = "NVIDIA GeForce RTX 5060 Laptop GPU" |
+                .Video.Resolution                       = "1920x1080" |
+                .Video["Resolution Scale"]              = 200 |
+                .Video["Write Color Buffers"]           = "false"
+            ' "$CONFIG_YML"
+        '';
         "setupDolphin" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
             TARGET_DIR="$APP_FILES_DIR/Dolphin"
@@ -276,6 +262,77 @@
             $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Roll Right     "\`Gyro Roll Right\`"
             $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Yaw Left       "\`Gyro Yaw Left\`"
             $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Yaw Right      "\`Gyro Yaw Right\`"
+        '';
+        "setupRyujinx" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
+            TARGET_DIR="$APP_FILES_DIR/Ryujinx"
+            COMPLETION_FILE="$TARGET_DIR/.download_completed"
+            TAR_GZ_FILENAME="$TARGET_DIR/ryujinx-meta-files.tar.gz"
+            CONFIG_KEYS_DIR="${config.home.homeDirectory}/.config/Ryujinx/system/"
+            CONFIG_FIRMWARE_DIR="${config.home.homeDirectory}/.config/Ryujinx/bis/system/Contents/registered/"
+            GAMES_DIR="$TARGET_DIR/games"
+            MODS_DIR="$TARGET_DIR/mods"
+            SAVES_DIR="$TARGET_DIR/saves"
+            CONFIG_FILE="${config.home.homeDirectory}/.config/Ryujinx/Config.json"
+            CONFIG_SAVES_DIR="${config.home.homeDirectory}/.config/Ryujinx/bis/user/save"
+            CONFIG_MODS_DIR="${config.home.homeDirectory}/.config/Ryujinx/mods/contents"
+
+            if [ ! -f "$COMPLETION_FILE" ]; then
+                export PATH="${pkgs.gnutar}/bin:${pkgs.gzip}/bin:$PATH"
+
+                $DRY_RUN_CMD echo "Downloading Ryujinx meta files from Google Drive..."
+
+                $DRY_RUN_CMD mkdir -p "$TARGET_DIR"
+                
+                $DRY_RUN_CMD ${pkgs.nix}/bin/nix-shell -p python3Packages.gdown \
+                    --run "gdown 'https://drive.google.com/uc?id=1s6fLOsalUYLnsMQC8785-CqfVLqIWegr' -O '$TAR_GZ_FILENAME'" \
+                    && tar -xzf "$TAR_GZ_FILENAME" -C "$TARGET_DIR" \
+                    && rm "$TAR_GZ_FILENAME" \
+                    && touch "$COMPLETION_FILE"
+            fi
+
+            if [ -f "$COMPLETION_FILE" ]; then
+                $DRY_RUN_CMD echo "Linking keys..."
+                $DRY_RUN_CMD mkdir -p "$CONFIG_KEYS_DIR"
+                for key in "$TARGET_DIR"/keys/*; do
+                    if [ -e "$key" ]; then
+                        $DRY_RUN_CMD ln -sf "$key" "$CONFIG_KEYS_DIR"
+                    fi
+                done
+
+                $DRY_RUN_CMD echo "Linking firmware..."
+                $DRY_RUN_CMD mkdir -p "$CONFIG_FIRMWARE_DIR"
+                for fw in "$TARGET_DIR"/firmware/*; do
+                    if [ -e "$fw" ]; then
+                        $DRY_RUN_CMD ln -sf "$fw" "$CONFIG_FIRMWARE_DIR"
+                    fi
+                done
+
+                $DRY_RUN_CMD echo "Creating games directory..."
+                $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
+                if [ -f "$CONFIG_FILE" ]; then
+                    $DRY_RUN_CMD echo "Updating game_dirs in Ryujinx Config.json..."
+                    TMP_FILE=$(mktemp)
+                    ${pkgs.jq}/bin/jq --arg dir "$GAMES_DIR" '.game_dirs = [$dir]' "$CONFIG_FILE" > "$TMP_FILE" \
+                        && mv "$TMP_FILE" "$CONFIG_FILE"
+                fi
+
+                $DRY_RUN_CMD echo "Creating saves directory..."
+                $DRY_RUN_CMD mkdir -p "$SAVES_DIR"
+                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_SAVES_DIR")"
+                if [ -d "$CONFIG_SAVES_DIR" ] && [ ! -L "$CONFIG_SAVES_DIR" ]; then
+                    $DRY_RUN_CMD rm -rf "$CONFIG_SAVES_DIR"
+                fi
+                $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
+
+                $DRY_RUN_CMD echo "Creating mods directory..."
+                $DRY_RUN_CMD mkdir -p "$MODS_DIR"
+                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_MODS_DIR")"
+                if [ -d "$CONFIG_MODS_DIR" ] && [ ! -L "$CONFIG_MODS_DIR" ]; then
+                    $DRY_RUN_CMD rm -rf "$CONFIG_MODS_DIR"
+                fi
+                $DRY_RUN_CMD ln -sfn "$MODS_DIR" "$CONFIG_MODS_DIR"
+            fi
         '';
     };
 }
