@@ -1,85 +1,9 @@
-# home/quisiou/files.nix
+# home/quisiou/files/rpcs3.nix
 
 { config, pkgs, lib, ... }:
 
 {
     home.file = {
-        # Quickshell
-        "Dotfiles/quickshell/shell/quickapps.json".text = ''
-            [
-                "codium",
-                "firefox",
-                "vesktop",
-                "steam",
-                "gimp",
-                "org.inkscape.Inkscape",
-                "spotify",
-                "org.musescore.MuseScore"
-            ]
-        '';
-
-        # Scripts
-        ".scripts/check_gow2018_hidraw.py".text = ''
-            from pathlib import Path
-
-
-            targetSection:  str     = '[System\\ControlSet001\\Services\\winebus]'
-            targetOption:   str     = '"DisableHidraw"=dword:00000001'
-            regPath:        Path    = Path.home() / ".steam" / "steam" / "steamapps" / "compatdata" / "1593500" / "pfx" / "system.reg"
-
-            with open(regPath, "r", encoding="utf-8", errors="ignore") as f:
-                lines = f.readlines()
-
-            # Find the line where the target section starts
-            sectionStart = None
-            for _, line in enumerate(lines):
-                if line.startswith(targetSection):
-                    sectionStart = _
-                    break
-
-            if sectionStart is None:
-                raise ValueError(f"Section {targetSection} not found in {regPath}")
-
-            # Find the line where the target section ends
-            sectionEnd = len(lines)
-            for i in range(sectionStart + 1, len(lines)):
-                stripped = lines[i].strip()
-                if stripped == "" or stripped.startswith('['):
-                    sectionEnd = i
-                    break
-
-            # If the target option is not present on the target section, insert it at the end of said section
-            if not any(
-                lines[i].strip().startswith(targetOption.split('=', 1)[0].strip())
-                for i in range(sectionStart + 1, sectionEnd)
-            ):
-                lines.insert(sectionEnd, targetOption + '\n')
-                with open(regPath, "w", encoding="utf-8") as f: # Only write to file if insertion was made; no need otherwise
-                    f.writelines(lines)
-        '';
-        ".scripts/rl_replay_wrapper.sh" = {
-            executable = true;
-            text = ''
-                #!/usr/bin/env sh
-                set -e
-
-                echo "$(date): wrapper invoked with args: $@" >> "$HOME/.scripts/wrapper.log"
-
-                mkdir -p "$HOME/Videos/Clips"
-
-                systemctl --user start gsr-replay@30.service
-                echo "$(date): requested recorder start via systemctl" >> "$HOME/.scripts/wrapper.log"
-
-                "$@"
-                game_exit=$?
-
-                systemctl --user stop gsr-replay@30.service 2>/dev/null || true
-
-                exit "$game_exit"
-            '';
-        };
-
-        # RPCS3
         "AppFiles/RPCS3/config.yml".text = ''
             Audio:
                 Renderer: "Cubeb"
@@ -101,6 +25,7 @@
                 Resolution Scale: 200
                 Write Color Buffers: false
         '';
+        
         "AppFiles/RPCS3/pad_config.yml".text = ''
             Player 1 Input:
                 Handler: SDL
@@ -196,5 +121,33 @@
                     Product ID: 616
                 Buddy Device: ""
         '';
+
+        ".scripts/setup_rpcs3_config.sh" = {
+            executable = true;
+            text = ''
+                set -eu
+
+                CUSTOM_CONFIG_YML="$HOME/AppFiles/RPCS3/config.yml"
+                CONFIG_YML="$HOME/.config/rpcs3/config.yml"
+
+                CUSTOM_PAD_YML="$HOME/AppFiles/RPCS3/pad_config.yml"
+                PAD_YML="$HOME/.config/rpcs3/input_configs/global/Default.yml"
+
+                merge_config() {
+                    local custom="$1"
+                    local live="$2"
+
+                    mkdir -p "$(dirname "$live")"
+                    if [ ! -f "$live" ]; then
+                        cp "$custom" "$live"
+                    else
+                        yq -i eval-all 'select(fileIndex==0) * select(fileIndex==1)' "$live" "$custom"
+                    fi
+                }
+
+                merge_config "$CUSTOM_CONFIG_YML" "$CONFIG_YML"
+                merge_config "$CUSTOM_PAD_YML" "$PAD_YML"
+            '';
+        };
     };
 }

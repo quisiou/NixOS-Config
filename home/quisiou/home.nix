@@ -5,7 +5,6 @@
 
 {
     imports = [
-        ./files.nix
         ./packages.nix
         ./programs.nix
         ./scripts.nix
@@ -14,6 +13,12 @@
         ./variables.nix
         ./xdg-desktop.nix
         ./xdg-mime.nix
+
+        # Nix-managed files
+        ./files/dotfiles.nix
+        ./files/pcsx2.nix
+        ./files/rpcs3.nix
+        ./files/steam.nix
     ];
 
     home = {

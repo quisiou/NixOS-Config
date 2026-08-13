@@ -5,16 +5,16 @@
 {
     home.activation = {
         # Emulator setup scripts
-        "setupPCSX2" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
-            TARGET_DIR="$APP_FILES_DIR/PCSX2"
+        "fetch_pcsx2_data" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            TARGET_DIR="${config.home.homeDirectory}/AppFiles/PCSX2"
             BIOS_DIR="$TARGET_DIR/bios"
             MEMCARDS_DIR="$TARGET_DIR/memcards"
             GAMES_DIR="$TARGET_DIR/games"
             COMPLETION_FILE="$TARGET_DIR/.download_completed"
             TAR_GZ_FILENAME="$TARGET_DIR/pcsx2-meta-files.tar.gz"
             CONFIG_BIOS_DIR="${config.home.homeDirectory}/.config/PCSX2/bios"
-            CRUDINI="${pkgs.crudini}/bin/crudini"
+            CONFIG_MEMCARDS_DIR="${config.home.homeDirectory}/.config/PCSX2/memcards"
+            CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/PCSX2/games"
 
             if [ ! -f "$COMPLETION_FILE" ]; then
                 export PATH="${pkgs.gnutar}/bin:${pkgs.gzip}/bin:$PATH"
@@ -39,12 +39,22 @@
                 fi
                 $DRY_RUN_CMD ln -sfn "$BIOS_DIR" "$CONFIG_BIOS_DIR"
             fi
-
-            $DRY_RUN_CMD echo "Creating games directory..."
-            $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
             
-            $DRY_RUN_CMD echo "Creating memory cards directory..."
+            $DRY_RUN_CMD echo "Creating and linking memory cards directory..."
             $DRY_RUN_CMD mkdir -p "$MEMCARDS_DIR"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_MEMCARDS_DIR")"
+            if [ -d "$CONFIG_MEMCARDS_DIR" ] && [ ! -L "$CONFIG_MEMCARDS_DIR" ]; then
+                $DRY_RUN_CMD rm -rf "$CONFIG_MEMCARDS_DIR"
+            fi
+            $DRY_RUN_CMD ln -sfn "$MEMCARDS_DIR" "$CONFIG_MEMCARDS_DIR"
+
+            $DRY_RUN_CMD echo "Creating and linking games directory..."
+            $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_GAMES_DIR")"
+            if [ -d "$CONFIG_GAMES_DIR" ] && [ ! -L "$CONFIG_GAMES_DIR" ]; then
+                $DRY_RUN_CMD rm -rf "$CONFIG_GAMES_DIR"
+            fi
+            $DRY_RUN_CMD ln -sfn "$GAMES_DIR" "$CONFIG_GAMES_DIR"
 
             # Create basic PCSX2 config structure
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/cache"
@@ -53,63 +63,13 @@
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/gamesettings"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/inputprofiles"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/logs"
-            $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/memcards"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/patches"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/resources"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/sstates"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/textures"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/videos"
-
-            # PCSX2.ini file
-            PCSX2_INI="${config.home.homeDirectory}/.config/PCSX2/inis/PCSX2.ini"
-            $DRY_RUN_CMD mkdir -p "$(dirname "$PCSX2_INI")"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    UI          SettingsVersion         "1"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    UI          SetupWizardIncomplete   "false"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    UI          Theme                   "darkfusionblue"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Folders     MemoryCards             "$MEMCARDS_DIR"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    GameList    RecursivePaths          "$GAMES_DIR"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot1_Enable            "true"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot1_Filename          "RatchetClank1.ps2"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot2_Enable            "true"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    MemoryCards Slot2_Filename          "RatchetClank2.ps2"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Type                    "DualShock2"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        InvertL                 "0"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        InvertR                 "0"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Deadzone                "0"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        AxisScale               "1.33"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        LargeMotorScale         "1"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        SmallMotorScale         "1"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        ButtonDeadzone          "0"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        PressureModifier        "0.5"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Up                      "SDL-0/DPadUp"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Right                   "SDL-0/DPadRight"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Down                    "SDL-0/DPadDown"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Left                    "SDL-0/DPadLeft"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Triangle                "SDL-0/FaceNorth"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Circle                  "SDL-0/FaceEast"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Cross                   "SDL-0/FaceSouth"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Square                  "SDL-0/FaceWest"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Select                  "SDL-0/Back"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Start                   "SDL-0/Start"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        L1                      "SDL-0/LeftShoulder"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        L2                      "SDL-0/+LeftTrigger"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        R1                      "SDL-0/RightShoulder"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        R2                      "SDL-0/+RightTrigger"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        L3                      "SDL-0/LeftStick"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        R3                      "SDL-0/RightStick"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        Analog                  "SDL-0/Guide"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        LUp                     "SDL-0/-LeftY"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        LRight                  "SDL-0/+LeftX"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        LDown                   "SDL-0/+LeftY"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        LLeft                   "SDL-0/-LeftX"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        RUp                     "SDL-0/-RightY"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        RRight                  "SDL-0/+RightX"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        RDown                   "SDL-0/+RightY"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        RLeft                   "SDL-0/-RightX"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        LargeMotor              "SDL-0/LargeMotor"
-            $DRY_RUN_CMD $CRUDINI --set "$PCSX2_INI"    Pad1        SmallMotor              "SDL-0/SmallMotor"
         '';
-        "setupRPCS3" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        "fetch_rpcs3_data" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
             TARGET_DIR="$APP_FILES_DIR/RPCS3"
             FIRMWARE_URL="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2026_0318_a2b60b6ac1d2e49e230144345616927c/PS3UPDAT.PUP"
@@ -118,14 +78,13 @@
             SAVES_DIR="$TARGET_DIR/saves"
             CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/rpcs3/games"
             CONFIG_SAVES_DIR="${config.home.homeDirectory}/.config/rpcs3/dev_hdd0/home/00000001/savedata"
-            YQ="${pkgs.yq-go}/bin/yq"
 
             if [ ! -f "$COMPLETION_FILE" ]; then
                 $DRY_RUN_CMD mkdir -p "$TARGET_DIR"
 
                 $DRY_RUN_CMD echo "Downloading PS3 firmware from Sony's official site..."
                 $DRY_RUN_CMD ${pkgs.wget}/bin/wget -O "$TARGET_DIR/PS3UPDAT.PUP" "$FIRMWARE_URL" \
-                    && touch "$COMPLETION_FILE"
+                    && $DRY_RUN_CMD touch "$COMPLETION_FILE"
             fi
 
             if [ -f "$COMPLETION_FILE" ]; then
@@ -145,31 +104,6 @@
                 fi
                 $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
             fi
-
-            # config.yml file
-            CUSTOM_CONFIG_YML="$TARGET_DIR/config.yml"
-            CONFIG_YML="${config.home.homeDirectory}/.config/rpcs3/config.yml"
-            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_YML")"
-            if [ ! -f "$CONFIG_YML" ]; then
-                $DRY_RUN_CMD cp "$CUSTOM_CONFIG_YML" "$CONFIG_YML"
-            else
-                $DRY_RUN_CMD "$YQ" -i eval-all '
-                    select(fileIndex==0) * select(fileIndex==1)
-                    ' "$CONFIG_YML" "$CUSTOM_CONFIG_YML"
-            fi
-
-            # controller file
-            CUSTOM_PAD_YML="$TARGET_DIR/pad_config.yml"
-            PAD_YML="${config.home.homeDirectory}/.config/rpcs3/input_configs/global/Default.yml"
-            $DRY_RUN_CMD mkdir -p "$(dirname "$PAD_YML")"
-            if [ ! -f "$PAD_YML" ]; then
-                $DRY_RUN_CMD cp "$CUSTOM_PAD_YML" "$PAD_YML"
-            else
-                $DRY_RUN_CMD "$YQ" -i eval-all '
-                    select(fileIndex==0) * select(fileIndex==1)
-                    ' "$PAD_YML" "$CUSTOM_PAD_YML"
-            fi
-            
         '';
         "setupDolphin" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"

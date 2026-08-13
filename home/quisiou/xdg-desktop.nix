@@ -3,6 +3,18 @@
 
 { config, pkgs, lib, ... }:
 
+let
+    pcsx2Launcher = pkgs.writeShellScript "pcsx2-launcher" ''
+        set -eu
+        "${config.home.homeDirectory}/.scripts/setup_pcsx2_config.sh"
+        exec ${pkgs.pcsx2}/bin/pcsx2-qt
+    '';
+    rpcs3Launcher = pkgs.writeShellScript "rpcs3-launcher" ''
+        set -eu
+        "${config.home.homeDirectory}/.scripts/setup_rpcs3_config.sh"
+        exec ${pkgs.rpcs3}/bin/rpcs3 "$@"
+    '';
+in
 {
     xdg.desktopEntries = {
         btop = {
@@ -118,6 +130,40 @@
                 Keywords = "mpv;media;player;video;audio;tv";
             };
             noDisplay = true;
+        };
+        PCSX2 = {
+            type = "Application";
+            name = "PCSX2";
+            genericName = "PlayStation 2 Emulator";
+            comment = "Sony PlayStation 2 emulator";
+            icon = "PCSX2";
+            exec = "${pcsx2Launcher}";
+            terminal = false;
+            categories = [
+                "Game"
+                "Emulator"
+            ];
+            settings = {
+                Keywords = "game;emulator";
+                StartupWMClass = "PCSX2";
+            };
+        };
+        rpcs3 = {
+            type = "Application";
+            name = "RPCS3";
+            genericName = "PlayStation 3 Emulator";
+            comment = "An open-source PlayStation 3 emulator/debugger written in C++.";
+            icon = "rpcs3";
+            exec = "${rpcs3Launcher} %f";
+            terminal = false;
+            categories = [
+                "Game"
+                "Emulator"
+            ];
+            settings = {
+                Keywords = "PS3;Playstation";
+                StartupWMClass = "rpcs3";
+            };
         };
     };
 }
