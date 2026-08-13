@@ -118,6 +118,7 @@
             SAVES_DIR="$TARGET_DIR/saves"
             CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/rpcs3/games"
             CONFIG_SAVES_DIR="${config.home.homeDirectory}/.config/rpcs3/dev_hdd0/home/00000001/savedata"
+            YQ="${pkgs.yq-go}/bin/yq"
 
             if [ ! -f "$COMPLETION_FILE" ]; then
                 $DRY_RUN_CMD mkdir -p "$TARGET_DIR"
@@ -146,25 +147,29 @@
             fi
 
             # config.yml file
+            CUSTOM_CONFIG_YML="$TARGET_DIR/config.yml"
             CONFIG_YML="${config.home.homeDirectory}/.config/rpcs3/config.yml"
             $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_YML")"
-            ${pkgs.yq-go}/bin/yq -i '
-                .Audio.Renderer                         = "Cubeb" |
-                .Core["PPU Decoder"]                    = "Recompiler (LLVM)" |
-                .Core["SPU Decoder"]                    = "Recompiler (LLVM)" |
-                .Core["Preferred SPU Threads"]          = 0 |
-                .Core["SPU Cache"]                      = "true" |
-                .Core["SPU loop detection"]             = "true" |
-                .Video["Anisotropic Filter Override"]   = 16 |
-                .Video["Frame limit"]                   = "Off" |
-                .Video["Multithreaded RSX"]             = "true" |
-                .Video.Renderer                         = "Vulkan" |
-                .Video["VSync Mode"]                    = "Disabled" |
-                .Video.Vulkan.Adapter                   = "NVIDIA GeForce RTX 5060 Laptop GPU" |
-                .Video.Resolution                       = "1920x1080" |
-                .Video["Resolution Scale"]              = 200 |
-                .Video["Write Color Buffers"]           = "false"
-            ' "$CONFIG_YML"
+            if [ ! -f "$CONFIG_YML" ]; then
+                $DRY_RUN_CMD cp "$CUSTOM_CONFIG_YML" "$CONFIG_YML"
+            else
+                $DRY_RUN_CMD "$YQ" -i eval-all '
+                    select(fileIndex==0) * select(fileIndex==1)
+                    ' "$CONFIG_YML" "$CUSTOM_CONFIG_YML"
+            fi
+
+            # controller file
+            CUSTOM_PAD_YML="$TARGET_DIR/pad_config.yml"
+            PAD_YML="${config.home.homeDirectory}/.config/rpcs3/input_configs/global/Default.yml"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$PAD_YML")"
+            if [ ! -f "$PAD_YML" ]; then
+                $DRY_RUN_CMD cp "$CUSTOM_PAD_YML" "$PAD_YML"
+            else
+                $DRY_RUN_CMD "$YQ" -i eval-all '
+                    select(fileIndex==0) * select(fileIndex==1)
+                    ' "$PAD_YML" "$CUSTOM_PAD_YML"
+            fi
+            
         '';
         "setupDolphin" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
