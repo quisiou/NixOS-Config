@@ -62,6 +62,9 @@ in
 
                 # Source user main config
                 [ -f "$HOME/.config/zsh/user/main.zsh" ] && . "$HOME/.config/zsh/user/main.zsh"
+
+                # The fuck
+                eval "$(pay-respects zsh)"
             '';
         };
         starship = {
