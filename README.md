@@ -9,7 +9,7 @@ Once done, Dotfiles repo should also be switched to SSH:\
 ---
 
 ### TODO
-- Do with dolphin emulator and ryujinx/ryubing as with pcsx2 (merging files).
+- Do with ryujinx/ryubing as with pcsx2 (merging files).
 - Find a way to automatize RPCS3 installing firmware.
 - Make ryujinx not overwrite my default settings.
 - Add language dictionaries and other add-ons to firefox.

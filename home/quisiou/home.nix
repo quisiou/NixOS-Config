@@ -16,6 +16,7 @@
 
         # Nix-managed files
         ./files/dotfiles.nix
+        ./files/dolphin-emu.nix
         ./files/pcsx2.nix
         ./files/rpcs3.nix
         ./files/steam.nix

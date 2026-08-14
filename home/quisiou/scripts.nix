@@ -5,7 +5,7 @@
 {
     home.activation = {
         # Emulator setup scripts
-        "fetch_pcsx2_data" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        "setupPCSX2" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             TARGET_DIR="${config.home.homeDirectory}/AppFiles/PCSX2"
             BIOS_DIR="$TARGET_DIR/bios"
             MEMCARDS_DIR="$TARGET_DIR/memcards"
@@ -69,7 +69,7 @@
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/textures"
             $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/PCSX2/videos"
         '';
-        "fetch_rpcs3_data" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        "setupRPCS3" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
             TARGET_DIR="$APP_FILES_DIR/RPCS3"
             FIRMWARE_URL="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2026_0318_a2b60b6ac1d2e49e230144345616927c/PS3UPDAT.PUP"
@@ -110,6 +110,7 @@
             TARGET_DIR="$APP_FILES_DIR/Dolphin"
             GAMES_DIR="$TARGET_DIR/games"
             CONFIG_DIR="${config.home.homeDirectory}/.config/dolphin-emu"
+            CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/dolphin-emu/games"
             CRUDINI="${pkgs.crudini}/bin/crudini"
 
             $DRY_RUN_CMD echo "Creating games directory..."
@@ -117,90 +118,12 @@
             
             # Ensure Dolphin directories exist
             $DRY_RUN_CMD mkdir -p "$CONFIG_DIR"
-
-            # Dolphin.ini file
-            DOLPHIN_INI="$CONFIG_DIR/Dolphin.ini"
-            $DRY_RUN_CMD $CRUDINI --set "$DOLPHIN_INI"  General     ISOPath0    "$GAMES_DIR"
-            $DRY_RUN_CMD $CRUDINI --set "$DOLPHIN_INI"  General     ISOPaths    1
-            $DRY_RUN_CMD $CRUDINI --set "$DOLPHIN_INI"  Interface   ThemeName   "Clean Lite"
-            $DRY_RUN_CMD $CRUDINI --set "$DOLPHIN_INI"  Settings    OSDFontSize 13
-            $DRY_RUN_CMD $CRUDINI --set "$DOLPHIN_INI"  Core        GFXBackend  "Vulkan"
-
-            # GFX.ini file
-            GFX_INI="$CONFIG_DIR/GFX.ini"
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Settings        ShowFPS                 "True"
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Settings        ShowFTimes              "True"
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Settings        ShowSpeed               "True"
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Settings        InternalResolution      4
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Settings        MSAA                    "0x00000008"
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Settings        ShaderCompilationMode   1
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Settings        SSAA                    "False"
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Enhancements    PostProcessingShader    ""
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Enhancements    ForceTextureFiltering   0
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Enhancements    MaxAnisotropy           4
-            $DRY_RUN_CMD $CRUDINI --set "$GFX_INI"  Hardware        Adapter                 1
-
-            # QT.ini file
-            QT_INI="$CONFIG_DIR/Qt.ini"
-            $DRY_RUN_CMD $CRUDINI --set "$QT_INI"   userstyle   enabled     "false"
-            $DRY_RUN_CMD $CRUDINI --set "$QT_INI"   userstyle   styletype   5
-
-            # WiimoteNew.ini file
-            WII_REMOTE_INI="$CONFIG_DIR/WiimoteNew.ini"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Device                      "SDL/0/DualSense Wireless Controller"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Buttons/A                   "\`Button S\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Buttons/B                   "\`Button E\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Buttons/1                   "\`Shoulder L\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Buttons/2                   "\`Shoulder R\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Buttons/-                   "Back"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Buttons/+                   "Start"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Buttons/Home                "Guide"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Shake/X                     "\`Button W\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Shake/Y                     "\`Button W\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Shake/Z                     "\`Button W\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Extension                   "Nunchuk"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Stick/Calibration   "100.00 141.42 100.00 141.42 100.00 141.42 100.00 141.42"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Shake/X             "\`Button W\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Shake/Y             "\`Button W\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Shake/Z             "\`Button W\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    D-Pad/Up                    "\`Pad N\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    D-Pad/Down                  "\`Pad S\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    D-Pad/Left                  "\`Pad W\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    D-Pad/Right                 "\`Pad E\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Buttons/C           "\`Trigger R\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Buttons/Z           "\`Trigger L\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Stick/Up            "\`Left Y+\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Stick/Down          "\`Left Y-\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Stick/Left          "\`Left X-\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    Nunchuk/Stick/Right         "\`Left X+\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IR/Up                       "\`Cursor Y-\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IR/Down                     "\`Cursor Y+\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IR/Left                     "\`Cursor X-\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IR/Right                    "\`Cursor X+\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 1 X    "\`IR Object 1 X\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 1 Y    "\`IR Object 1 Y\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 1 Size "\`IR Object 1 Size\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 2 X    "\`IR Object 2 X\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 2 Y    "\`IR Object 2 Y\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 2 Size "\`IR Object 2 Size\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 3 X    "\`IR Object 3 X\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 3 Y    "\`IR Object 3 Y\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 3 Size "\`IR Object 3 Size\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 4 X    "\`IR Object 4 X\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 4 Y    "\`IR Object 4 Y\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IRPassthrough/Object 4 Size "\`IR Object 4 Size\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUAccelerometer/Up         "\`Accel Up\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUAccelerometer/Down       "\`Accel Down\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUAccelerometer/Left       "\`Accel Left\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUAccelerometer/Right      "\`Accel Right\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUAccelerometer/Forward    "\`Accel Forward\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUAccelerometer/Backward   "\`Accel Backward\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Pitch Up       "\`Gyro Pitch Up\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Pitch Down     "\`Gyro Pitch Down\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Roll Left      "\`Gyro Roll Left\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Roll Right     "\`Gyro Roll Right\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Yaw Left       "\`Gyro Yaw Left\`"
-            $DRY_RUN_CMD $CRUDINI --set "$WII_REMOTE_INI"   Wiimote1    IMUGyroscope/Yaw Right      "\`Gyro Yaw Right\`"
+            $DRY_RUN_CMD echo "Linking games directory..."
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_GAMES_DIR")"
+            if [ -d "$CONFIG_GAMES_DIR" ] && [ ! -L "$CONFIG_GAMES_DIR" ]; then
+                $DRY_RUN_CMD rm -rf "$CONFIG_GAMES_DIR"
+            fi
+            $DRY_RUN_CMD ln -sfn "$GAMES_DIR" "$CONFIG_GAMES_DIR"
         '';
         "setupRyujinx" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"

@@ -122,7 +122,7 @@
                 Buddy Device: ""
         '';
 
-        ".scripts/setup_rpcs3_config.sh" = {
+        ".scripts/configure_rpcs3.sh" = {
             executable = true;
             text = ''
                 set -eu

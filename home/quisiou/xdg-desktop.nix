@@ -4,14 +4,19 @@
 { config, pkgs, lib, ... }:
 
 let
+    dolphinEmuLauncher = pkgs.writeShellScript "dolphin-emu-launcher" ''
+        set -eu
+        "${config.home.homeDirectory}/.scripts/configure_dolphin-emu.sh"
+        exec ${pkgs.dolphin-emu}/bin/dolphin-emu
+    '';
     pcsx2Launcher = pkgs.writeShellScript "pcsx2-launcher" ''
         set -eu
-        "${config.home.homeDirectory}/.scripts/setup_pcsx2_config.sh"
+        "${config.home.homeDirectory}/.scripts/configure_pcsx2.sh"
         exec ${pkgs.pcsx2}/bin/pcsx2-qt
     '';
     rpcs3Launcher = pkgs.writeShellScript "rpcs3-launcher" ''
         set -eu
-        "${config.home.homeDirectory}/.scripts/setup_rpcs3_config.sh"
+        "${config.home.homeDirectory}/.scripts/configure_rpcs3.sh"
         exec ${pkgs.rpcs3}/bin/rpcs3 "$@"
     '';
 in
@@ -33,6 +38,19 @@ in
             settings = {
                 Keywords = "system;process;task";
             };
+        };
+        "dolphin-emu" = {
+            type = "Application";
+            name = "Dolphin Emulator";
+            genericName = "Wii/GameCube Emulator";
+            comment = "A Wii/GameCube Emulator";
+            icon = "dolphin-emu";
+            exec = "${dolphinEmuLauncher}";
+            terminal = false;
+            categories = [
+                "Game"
+                "Emulator"
+            ];
         };
         firefox = {
             type = "Application";
@@ -64,6 +82,27 @@ in
                     exec = "firefox --ProfileManager";
                 };
             };
+        };
+        mpv = {
+            type = "Application";
+            name = "MPV Media Player";
+            genericName = "Multimedia player";
+            comment = "Play movies and songs";
+            icon = "mpv";
+            exec = "mpv --player-operation-mode=pseudo-gui -- %U";
+            terminal = false;
+            startupNotify = false;
+            categories = [
+                "AudioVideo"
+                "Audio"
+                "Video"
+                "Player"
+                "TV"
+            ];
+            settings = {
+                Keywords = "mpv;media;player;video;audio;tv";
+            };
+            noDisplay = true;
         };
         nvim = {
             type = "Application";
@@ -109,27 +148,6 @@ in
             settings = {
                 Keywords = "music;notation;composition;composing;arranging;making;sheet music;music notation software;lead sheet;leadsheet;score;full score;scorewriter;MIDI;musicxml;playback;instrument";
             };
-        };
-        mpv = {
-            type = "Application";
-            name = "MPV Media Player";
-            genericName = "Multimedia player";
-            comment = "Play movies and songs";
-            icon = "mpv";
-            exec = "mpv --player-operation-mode=pseudo-gui -- %U";
-            terminal = false;
-            startupNotify = false;
-            categories = [
-                "AudioVideo"
-                "Audio"
-                "Video"
-                "Player"
-                "TV"
-            ];
-            settings = {
-                Keywords = "mpv;media;player;video;audio;tv";
-            };
-            noDisplay = true;
         };
         PCSX2 = {
             type = "Application";

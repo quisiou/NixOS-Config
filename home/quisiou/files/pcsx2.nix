@@ -57,7 +57,7 @@
             SmallMotor = SDL-0/SmallMotor
         '';
         
-        ".scripts/setup_pcsx2_config.sh" = {
+        ".scripts/configure_pcsx2.sh" = {
             executable = true;
             text = ''
                 set -eu
