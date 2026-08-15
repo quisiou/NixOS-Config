@@ -9,5 +9,6 @@
         EDITOR = "nvim";
         VISUAL = "nvim";
         UV_PYTHON_PREFERENCE = "only-managed";
+        DICPATH = "${pkgs.hunspellDicts.en_US}/share/hunspell:${pkgs.hunspellDicts.es_ES}/share/hunspell";
     };
 }

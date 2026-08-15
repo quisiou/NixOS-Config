@@ -5,6 +5,26 @@
 {
     home.activation = {
         # Emulator setup scripts
+        "setupDolphinEmu" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
+            TARGET_DIR="$APP_FILES_DIR/DolphinEmu"
+            GAMES_DIR="$TARGET_DIR/games"
+            CONFIG_DIR="${config.home.homeDirectory}/.config/dolphin-emu"
+            CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/dolphin-emu/games"
+            CRUDINI="${pkgs.crudini}/bin/crudini"
+
+            $DRY_RUN_CMD echo "Creating games directory..."
+            $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
+            
+            # Ensure Dolphin directories exist
+            $DRY_RUN_CMD mkdir -p "$CONFIG_DIR"
+            $DRY_RUN_CMD echo "Linking games directory..."
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_GAMES_DIR")"
+            if [ -d "$CONFIG_GAMES_DIR" ] && [ ! -L "$CONFIG_GAMES_DIR" ]; then
+                $DRY_RUN_CMD rm -rf "$CONFIG_GAMES_DIR"
+            fi
+            $DRY_RUN_CMD ln -sfn "$GAMES_DIR" "$CONFIG_GAMES_DIR"
+        '';
         "setupPCSX2" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             TARGET_DIR="${config.home.homeDirectory}/AppFiles/PCSX2"
             BIOS_DIR="$TARGET_DIR/bios"
@@ -104,26 +124,6 @@
                 fi
                 $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
             fi
-        '';
-        "setupDolphinEmu" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
-            TARGET_DIR="$APP_FILES_DIR/DolphinEmu"
-            GAMES_DIR="$TARGET_DIR/games"
-            CONFIG_DIR="${config.home.homeDirectory}/.config/dolphin-emu"
-            CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/dolphin-emu/games"
-            CRUDINI="${pkgs.crudini}/bin/crudini"
-
-            $DRY_RUN_CMD echo "Creating games directory..."
-            $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
-            
-            # Ensure Dolphin directories exist
-            $DRY_RUN_CMD mkdir -p "$CONFIG_DIR"
-            $DRY_RUN_CMD echo "Linking games directory..."
-            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_GAMES_DIR")"
-            if [ -d "$CONFIG_GAMES_DIR" ] && [ ! -L "$CONFIG_GAMES_DIR" ]; then
-                $DRY_RUN_CMD rm -rf "$CONFIG_GAMES_DIR"
-            fi
-            $DRY_RUN_CMD ln -sfn "$GAMES_DIR" "$CONFIG_GAMES_DIR"
         '';
         "setupRyujinx" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"

@@ -18,6 +18,115 @@ let
 in
 {
     programs = {
+        firefox = {
+            enable = true;
+            profiles."quisiou" = {
+                settings."extensions.autoDisableScopes" = 0;
+                extensions.packages = [
+                    (mkFirefoxAddon {
+                        name = "vimium";
+                        addonId = "{d7742d87-e61d-4b78-b8a1-b469842139fa}";
+                        url = "https://addons.mozilla.org/firefox/downloads/file/4717567/vimium_ff-2.4.2.xpi";
+                        hash = "sha256-Ex4qZ1gOeukSWrGXgRWeYUCfrEe0Qfwngqq3Y5bq0ZY=";
+                    })
+                ];
+                bookmarks = {
+                    force = true;
+                    settings = [{
+                        toolbar = true;
+                        bookmarks = [
+                            {
+                                name = "NixOS";
+                                bookmarks = [
+                                    {
+                                        name = "Search";
+                                        url = "https://search.nixos.org";
+                                    }
+                                    {
+                                        name = "Home Manager";
+                                        tags = [ "home" "manager" ];
+                                        url = "https://nix-community.github.io/home-manager/options/home-manager/";
+                                    }
+                                ];
+                            }
+                            "separator"
+                            {
+                                name = "GitHub";
+                                url = "https://github.com";
+                            }
+                            "separator"
+                            {
+                                name = "Movies (torrent)";
+                                url = "https://yts.gg/";
+                            }
+                        ];
+                    }];
+                };
+            };
+        };
+        git = {
+            enable = true;
+            settings = {
+                user = {
+                    name = "quisiou";
+                    email = "marco.casteleiro@gmail.com";
+                };
+            };
+        }; 
+        starship = {
+            enable = true;
+            enableZshIntegration = true;
+            configPath = "${config.home.homeDirectory}/Dotfiles/starship/starship.toml";
+        };
+        thunderbird = {
+            enable = true;
+            profiles."quisiou" = {
+                isDefault = true;
+
+                settings = {
+                    "mail.spellcheck.inline" = true;
+                    "mail.shell.checkDefaultClient" = false;
+                    "spellchecker.dictionary" = "en-US,es-ES";
+                };
+            };
+        };
+        vesktop = {
+            enable = true;
+            vencord.settings = {
+                autoUpdate = true;
+                autoUpdateNotification = true;
+                notifyAboutUpdates = true;
+            };
+        };
+        vscodium = {
+            enable = true;
+
+            profiles.default.extensions =
+            (with pkgs.vscode-extensions; [
+                llvm-vs-code-extensions.vscode-clangd
+                twxs.cmake
+                ms-toolsai.jupyter
+                ms-toolsai.jupyter-renderers
+                ms-toolsai.vscode-jupyter-cell-tags
+                ms-toolsai.vscode-jupyter-slideshow
+                ms-toolsai.jupyter-keymap
+                james-yu.latex-workshop
+                sumneko.lua
+                jnoortheen.nix-ide
+                ms-python.python
+                ms-python.vscode-pylance
+                ms-python.debugpy
+                ms-python.vscode-python-envs
+                mechatroner.rainbow-csv
+                tombi-toml.tombi
+            ])
+            ++
+            (with pkgs.vscode-marketplace; [
+                theqtcompany.qt-core
+                theqtcompany.qt-qml
+                eww-yuck.yuck
+            ]);
+        };
         zsh = {
             enable = true;
             enableCompletion = true;
@@ -66,103 +175,6 @@ in
                 # The fuck
                 eval "$(pay-respects zsh)"
             '';
-        };
-        starship = {
-            enable = true;
-            enableZshIntegration = true;
-            configPath = "${config.home.homeDirectory}/Dotfiles/starship/starship.toml";
-        };
-        git = {
-            enable = true;
-            settings = {
-                user = {
-                    name = "quisiou";
-                    email = "marco.casteleiro@gmail.com";
-                };
-            };
-        };
-        vesktop = {
-            enable = true;
-            vencord.settings = {
-                autoUpdate = true;
-                autoUpdateNotification = true;
-                notifyAboutUpdates = true;
-            };
-        };
-        firefox = {
-            enable = true;
-            profiles."quisiou" = {
-                settings."extensions.autoDisableScopes" = 0;
-                extensions.packages = [
-                    (mkFirefoxAddon {
-                        name = "vimium";
-                        addonId = "{d7742d87-e61d-4b78-b8a1-b469842139fa}";
-                        url = "https://addons.mozilla.org/firefox/downloads/file/4717567/vimium_ff-2.4.2.xpi";
-                        hash = "sha256-Ex4qZ1gOeukSWrGXgRWeYUCfrEe0Qfwngqq3Y5bq0ZY=";
-                    })
-                ];
-                bookmarks = {
-                    force = true;
-                    settings = [{
-                        toolbar = true;
-                        bookmarks = [
-                            {
-                                name = "NixOS";
-                                bookmarks = [
-                                    {
-                                        name = "Search";
-                                        url = "https://search.nixos.org";
-                                    }
-                                    {
-                                        name = "Home Manager";
-                                        tags = [ "home" "manager" ];
-                                        url = "https://nix-community.github.io/home-manager/options/home-manager/";
-                                    }
-                                ];
-                            }
-                            "separator"
-                            {
-                                name = "GitHub";
-                                url = "https://github.com";
-                            }
-                            "separator"
-                            {
-                                name = "Movies (torrent)";
-                                url = "https://yts.gg/";
-                            }
-                        ];
-                    }];
-                };
-            };
-        };
-        vscodium = {
-            enable = true;
-
-            profiles.default.extensions =
-            (with pkgs.vscode-extensions; [
-                llvm-vs-code-extensions.vscode-clangd
-                twxs.cmake
-                ms-toolsai.jupyter
-                ms-toolsai.jupyter-renderers
-                ms-toolsai.vscode-jupyter-cell-tags
-                ms-toolsai.vscode-jupyter-slideshow
-                ms-toolsai.jupyter-keymap
-                james-yu.latex-workshop
-                sumneko.lua
-                jnoortheen.nix-ide
-                ms-python.python
-                ms-python.vscode-pylance
-                ms-python.debugpy
-                ms-python.vscode-python-envs
-                mechatroner.rainbow-csv
-                tombi-toml.tombi
-            ])
-            ++
-            (with pkgs.vscode-marketplace; [
-                theqtcompany.qt-core
-                theqtcompany.qt-qml
-                eww-yuck.yuck
-            ]);
         };
     };
 }
