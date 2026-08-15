@@ -9,7 +9,6 @@ Once done, Dotfiles repo should also be switched to SSH:\
 ---
 
 ### TODO
-- Find a way to automatize RPCS3 installing firmware.
 - Add thunderbird and configure it via home manager.
 - Add language dictionaries and other add-ons to firefox.
 - Set up UEFI control without Win11 (and set battery limit to 80/85%)

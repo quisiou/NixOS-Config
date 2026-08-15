@@ -19,7 +19,12 @@ let
     rpcs3Launcher = pkgs.writeShellScript "rpcs3-launcher" ''
         set -eu
         "${config.home.homeDirectory}/.scripts/configure_rpcs3.sh"
-        exec ${pkgs.rpcs3}/bin/rpcs3 "$@"
+
+        if [ ! -f "$HOME/.config/rpcs3/dev_flash/vsh/etc/version.txt" ]; then
+            exec ${pkgs.rpcs3}/bin/rpcs3 --installfw "$HOME/AppFiles/RPCS3/PS3UPDAT.PUP" "$@"
+        else
+            exec ${pkgs.rpcs3}/bin/rpcs3 "$@"
+        fi
     '';
     ryujinxLauncher = pkgs.writeShellScript "ryujinx-launcher" ''
         set -eu
