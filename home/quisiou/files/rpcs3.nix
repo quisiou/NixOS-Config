@@ -139,7 +139,7 @@
 
                     mkdir -p "$(dirname "$live")"
                     if [ ! -f "$live" ]; then
-                        cp "$custom" "$live"
+                        cp --no-preserve=mode "$custom" "$live"
                     else
                         yq -i eval-all 'select(fileIndex==0) * select(fileIndex==1)' "$live" "$custom"
                     fi

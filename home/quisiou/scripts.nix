@@ -105,9 +105,9 @@
                 $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
             fi
         '';
-        "setupDolphin" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        "setupDolphinEmu" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
-            TARGET_DIR="$APP_FILES_DIR/Dolphin"
+            TARGET_DIR="$APP_FILES_DIR/DolphinEmu"
             GAMES_DIR="$TARGET_DIR/games"
             CONFIG_DIR="${config.home.homeDirectory}/.config/dolphin-emu"
             CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/dolphin-emu/games"
@@ -135,7 +135,7 @@
             GAMES_DIR="$TARGET_DIR/games"
             MODS_DIR="$TARGET_DIR/mods"
             SAVES_DIR="$TARGET_DIR/saves"
-            CONFIG_FILE="${config.home.homeDirectory}/.config/Ryujinx/Config.json"
+            CONFIG_GAMES_DIR="${config.home.homeDirectory}/.config/Ryujinx/games"
             CONFIG_SAVES_DIR="${config.home.homeDirectory}/.config/Ryujinx/bis/user/save"
             CONFIG_MODS_DIR="${config.home.homeDirectory}/.config/Ryujinx/mods/contents"
 
@@ -169,32 +169,31 @@
                         $DRY_RUN_CMD ln -sf "$fw" "$CONFIG_FIRMWARE_DIR"
                     fi
                 done
-
-                $DRY_RUN_CMD echo "Creating games directory..."
-                $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
-                if [ -f "$CONFIG_FILE" ]; then
-                    $DRY_RUN_CMD echo "Updating game_dirs in Ryujinx Config.json..."
-                    TMP_FILE=$(mktemp)
-                    ${pkgs.jq}/bin/jq --arg dir "$GAMES_DIR" '.game_dirs = [$dir]' "$CONFIG_FILE" > "$TMP_FILE" \
-                        && mv "$TMP_FILE" "$CONFIG_FILE"
-                fi
-
-                $DRY_RUN_CMD echo "Creating saves directory..."
-                $DRY_RUN_CMD mkdir -p "$SAVES_DIR"
-                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_SAVES_DIR")"
-                if [ -d "$CONFIG_SAVES_DIR" ] && [ ! -L "$CONFIG_SAVES_DIR" ]; then
-                    $DRY_RUN_CMD rm -rf "$CONFIG_SAVES_DIR"
-                fi
-                $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
-
-                $DRY_RUN_CMD echo "Creating mods directory..."
-                $DRY_RUN_CMD mkdir -p "$MODS_DIR"
-                $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_MODS_DIR")"
-                if [ -d "$CONFIG_MODS_DIR" ] && [ ! -L "$CONFIG_MODS_DIR" ]; then
-                    $DRY_RUN_CMD rm -rf "$CONFIG_MODS_DIR"
-                fi
-                $DRY_RUN_CMD ln -sfn "$MODS_DIR" "$CONFIG_MODS_DIR"
             fi
+
+            $DRY_RUN_CMD echo "Creating and linking games directory..."
+            $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_GAMES_DIR")"
+            if [ -d "$CONFIG_GAMES_DIR" ] && [ ! -L "$CONFIG_GAMES_DIR" ]; then
+                $DRY_RUN_CMD rm -rf "$CONFIG_GAMES_DIR"
+            fi
+            $DRY_RUN_CMD ln -sfn "$GAMES_DIR" "$CONFIG_GAMES_DIR"
+
+            $DRY_RUN_CMD echo "Creating saves directory..."
+            $DRY_RUN_CMD mkdir -p "$SAVES_DIR"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_SAVES_DIR")"
+            if [ -d "$CONFIG_SAVES_DIR" ] && [ ! -L "$CONFIG_SAVES_DIR" ]; then
+                $DRY_RUN_CMD rm -rf "$CONFIG_SAVES_DIR"
+            fi
+            $DRY_RUN_CMD ln -sfn "$SAVES_DIR" "$CONFIG_SAVES_DIR"
+
+            $DRY_RUN_CMD echo "Creating mods directory..."
+            $DRY_RUN_CMD mkdir -p "$MODS_DIR"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_MODS_DIR")"
+            if [ -d "$CONFIG_MODS_DIR" ] && [ ! -L "$CONFIG_MODS_DIR" ]; then
+                $DRY_RUN_CMD rm -rf "$CONFIG_MODS_DIR"
+            fi
+            $DRY_RUN_CMD ln -sfn "$MODS_DIR" "$CONFIG_MODS_DIR"
         '';
     };
 }

@@ -4,7 +4,7 @@
 
 {
     home.file = {
-        "AppFiles/Dolphin/Dolphin.ini".text = ''
+        "AppFiles/DolphinEmu/Dolphin.ini".text = ''
             [General]
             ISOPaths = 1
             [Interface]
@@ -15,7 +15,7 @@
             GFXBackend = Vulkan
         '';
 
-        "AppFiles/Dolphin/GFX.ini".text = ''
+        "AppFiles/DolphinEmu/GFX.ini".text = ''
             [Settings]
             ShowFPS = True
             ShowFTimes = True
@@ -32,13 +32,13 @@
             Adapter = 1
         '';
 
-        "AppFiles/Dolphin/Qt.ini".text = ''
+        "AppFiles/DolphinEmu/Qt.ini".text = ''
             [userstyle]
             enabled=false
             styletype=5
         '';
 
-        "AppFiles/Dolphin/WiimoteNew.ini".text = ''
+        "AppFiles/DolphinEmu/WiimoteNew.ini".text = ''
             [Wiimote1]
             Device = SDL/0/DualSense Wireless Controller
             Buttons/A = `Button S`
@@ -101,16 +101,16 @@
             text = ''
                 set -eu
 
-                CUSTOM_DOLPHIN_INI="$HOME/AppFiles/Dolphin/Dolphin.ini"
+                CUSTOM_DOLPHIN_INI="$HOME/AppFiles/DolphinEmu/Dolphin.ini"
                 DOLPHIN_INI="$HOME/.config/dolphin-emu/Dolphin.ini"
 
-                CUSTOM_GFX_INI="$HOME/AppFiles/Dolphin/GFX.ini"
+                CUSTOM_GFX_INI="$HOME/AppFiles/DolphinEmu/GFX.ini"
                 GFX_INI="$HOME/.config/dolphin-emu/GFX.ini"
 
-                CUSTOM_QT_INI="$HOME/AppFiles/Dolphin/Qt.ini"
+                CUSTOM_QT_INI="$HOME/AppFiles/DolphinEmu/Qt.ini"
                 QT_INI="$HOME/.config/dolphin-emu/Qt.ini"
 
-                CUSTOM_WIIMOTE_INI="$HOME/AppFiles/Dolphin/WiimoteNew.ini"
+                CUSTOM_WIIMOTE_INI="$HOME/AppFiles/DolphinEmu/WiimoteNew.ini"
                 WIIMOTE_INI="$HOME/.config/dolphin-emu/WiimoteNew.ini"
 
                 merge_config() {

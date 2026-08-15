@@ -9,9 +9,8 @@ Once done, Dotfiles repo should also be switched to SSH:\
 ---
 
 ### TODO
-- Do with ryujinx/ryubing as with pcsx2 (merging files).
 - Find a way to automatize RPCS3 installing firmware.
-- Make ryujinx not overwrite my default settings.
+- Add thunderbird and configure it via home manager.
 - Add language dictionaries and other add-ons to firefox.
 - Set up UEFI control without Win11 (and set battery limit to 80/85%)
 - (Linux 7.2) Setup webcam.

@@ -7,6 +7,8 @@ let
     dolphinEmuLauncher = pkgs.writeShellScript "dolphin-emu-launcher" ''
         set -eu
         "${config.home.homeDirectory}/.scripts/configure_dolphin-emu.sh"
+        export QT_AUTO_SCREEN_SCALE_FACTOR=0
+        export QT_SCALE_FACTOR=1.5
         exec ${pkgs.dolphin-emu}/bin/dolphin-emu
     '';
     pcsx2Launcher = pkgs.writeShellScript "pcsx2-launcher" ''
@@ -18,6 +20,12 @@ let
         set -eu
         "${config.home.homeDirectory}/.scripts/configure_rpcs3.sh"
         exec ${pkgs.rpcs3}/bin/rpcs3 "$@"
+    '';
+    ryujinxLauncher = pkgs.writeShellScript "ryujinx-launcher" ''
+        set -eu
+        "${config.home.homeDirectory}/.scripts/configure_ryujinx.sh"
+        export AVALONIA_GLOBAL_SCALE_FACTOR=1.5
+        exec ${pkgs.ryubing}/bin/Ryujinx.sh "$@"
     '';
 in
 {
@@ -170,7 +178,7 @@ in
             type = "Application";
             name = "RPCS3";
             genericName = "PlayStation 3 Emulator";
-            comment = "An open-source PlayStation 3 emulator/debugger written in C++.";
+            comment = "An open-source PlayStation 3 emulator/debugger written in C++";
             icon = "rpcs3";
             exec = "${rpcs3Launcher} %f";
             terminal = false;
@@ -181,6 +189,31 @@ in
             settings = {
                 Keywords = "PS3;Playstation";
                 StartupWMClass = "rpcs3";
+            };
+        };
+        Ryujinx = {
+            type = "Application";
+            name = "Ryujinx";
+            genericName = "Nintendo Switch Emulator";
+            comment = "A Nintendo Switch Emulator";
+            icon = "Ryujinx";
+            exec = "${ryujinxLauncher} %f";
+            terminal = false;
+            categories = [
+                "Game"
+                "Emulator"
+            ];
+            mimeType = [
+                "application/x-nx-nca"
+                "application/x-nx-nro"
+                "application/x-nx-nso"
+                "application/x-nx-nsp"
+                "application/x-nx-xci"
+            ];
+            prefersNonDefaultGPU = true;
+            settings = {
+                Keywords = "Switch;Nintendo;Emulator";
+                StartupWMClass = "Ryujinx";
             };
         };
     };

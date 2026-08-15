@@ -19,6 +19,7 @@
         ./files/dolphin-emu.nix
         ./files/pcsx2.nix
         ./files/rpcs3.nix
+        ./files/ryujinx.nix
         ./files/steam.nix
     ];
 
