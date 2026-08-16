@@ -195,5 +195,18 @@
             fi
             $DRY_RUN_CMD ln -sfn "$MODS_DIR" "$CONFIG_MODS_DIR"
         '';
+
+        # Vesktop settings
+        "vesktopVencordDir" = lib.hm.dag.entryAfter ["writeBoundary"] ''
+            STATE_FILE="$HOME/.config/vesktop/state.json"
+            $DRY_RUN_CMD mkdir -p "$(dirname "$STATE_FILE")"
+            VENCORD_DIR="$HOME/.local/share/Vencord/dist"
+            if [ -e "$STATE_FILE" ]; then
+                $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg dir "$VENCORD_DIR" '.vencordDir = $dir' \
+                "$STATE_FILE" > "$STATE_FILE.tmp" && $DRY_RUN_CMD mv "$STATE_FILE.tmp" "$STATE_FILE"
+            else
+                $DRY_RUN_CMD echo "{\"vencordDir\": \"$VENCORD_DIR\"}" > "$STATE_FILE"
+            fi
+        '';
     };
 }

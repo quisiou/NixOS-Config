@@ -5,7 +5,7 @@
 {
     nix.gc = {
         automatic = true;
-        dates = "Monday *-*-* 03:00:00";
+        dates = "Monday *-*-* 09:00:00";
         options = "--delete-old";
     };
 }

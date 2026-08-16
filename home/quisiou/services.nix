@@ -59,7 +59,7 @@
 
                     echo "Running dotfiles setup..."
                     ${pkgs.nix}/bin/nix-shell -I nixpkgs=${pkgs.path} \
-                        -p cmake glib pkg-config networkmanager alsa-lib ninja qt6.qtbase qt6.qtdeclarative spirv-tools \
+                        -p cmake glib pkg-config networkmanager alsa-lib ninja qt6.qtbase qt6.qtdeclarative spirv-tools bindfs \
                         --run "export PATH=\$PATH:/run/current-system/sw/bin && ${config.home.homeDirectory}/Dotfiles/setup.sh -f -n"
                 '';
                 StandardOutput = "journal+console";
@@ -80,6 +80,20 @@
                     -a default_output -ac opus \
                     -q very_high -k av1_10bit -cr limited -f 120 -fm cfr \
                     -o "%h/Videos/Clips/" -c mp4 -r %i
+                '';
+            };
+        };
+
+        "vencord-autoupdate" = {
+            Unit.Description = "Pull and rebuild custom Vencord fork";
+            Service = {
+                Type = "oneshot";
+                WorkingDirectory = "${config.home.homeDirectory}/.local/share/Vencord";
+                ExecStart = pkgs.writeShellScript "vencord-update" ''
+                    set -e
+                    ${pkgs.git}/bin/git pull --ff-only
+                    ${pkgs.pnpm}/bin/pnpm install --frozen-lockfile
+                    ${pkgs.pnpm}/bin/pnpm build
                 '';
             };
         };

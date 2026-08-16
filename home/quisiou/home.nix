@@ -10,6 +10,7 @@
         ./scripts.nix
         ./services.nix
         ./theme.nix
+        ./timers.nix
         ./variables.nix
         ./xdg-desktop.nix
         ./xdg-mime.nix
