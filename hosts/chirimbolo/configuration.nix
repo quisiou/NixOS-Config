@@ -24,6 +24,7 @@
         ../../modules/security.nix
         ../../modules/services.nix
         ../../modules/users.nix
+        ../../modules/xdg.nix
 
         # Specific file with steam launch options for every game
         ./steam-games.nix
