@@ -15,8 +15,10 @@
         # Use latest kernel.
         kernelPackages = pkgs.linuxPackages_latest;
 
-        kernelParams = [ "loglevel=3" ];
-        kernelModules = [ "hid_playstation" ];
         kernel.sysctl = { "kernel.printk" = "3 4 1 3"; };
+        kernelParams = [ "loglevel=3" ];
+        kernelModules = [
+            "hid_playstation"
+        ];
     };
 }
