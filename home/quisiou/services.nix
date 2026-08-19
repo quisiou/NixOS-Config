@@ -101,6 +101,7 @@
         "vesktop-overlay" = {
             Unit.Description = "Call status OSD for vesktop implemented with Quickshell";
             Service = {
+                Environment = [ "QML_IMPORT_PATH=%h/.config/quickshell/.build/qml" ];
                 ExecStart = "${pkgs.quickshell}/bin/quickshell -c vesktop-overlay";
                 Restart = "no";
             };
