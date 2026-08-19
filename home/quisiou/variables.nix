@@ -5,6 +5,7 @@
 
 {
     home.sessionVariables = {
+        XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
         STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
         EDITOR = "nvim";
         VISUAL = "nvim";
