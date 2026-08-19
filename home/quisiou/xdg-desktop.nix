@@ -32,6 +32,20 @@ let
         export AVALONIA_GLOBAL_SCALE_FACTOR=1.5
         exec ${pkgs.ryubing}/bin/Ryujinx.sh "$@"
     '';
+    vesktopLauncher = pkgs.writeShellScript "vesktop-launcher" ''
+        set -u
+
+        cleanup() {
+            systemctl --user stop vesktop-overlay.service
+        }
+        trap cleanup EXIT
+        trap 'exit 143' TERM
+        trap 'exit 130' INT
+
+        systemctl --user start vesktop-overlay.service
+
+        ${pkgs.vesktop}/bin/vesktop "$@"
+    '';
 in
 {
     xdg.desktopEntries = {
@@ -219,6 +233,25 @@ in
             settings = {
                 Keywords = "Switch;Nintendo;Emulator";
                 StartupWMClass = "Ryujinx";
+            };
+        };
+        vesktop = {
+            type = "Application";
+            name = "Vesktop";
+            genericName = "Internet Messenger";
+            icon = "vesktop";
+            exec = "${vesktopLauncher} %U";
+            categories = [
+                "Network"
+                "InstantMessaging"
+                "Chat"
+            ];
+            mimeType = [
+                "x-scheme-handler/discord"
+            ];
+            settings = {
+                Keywords = "discord;vencord;electron;chat";
+                StartupWMClass = "Vesktop";
             };
         };
     };
