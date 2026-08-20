@@ -11,6 +11,7 @@
         gpu-screen-recorder.enable = true;      # Self-explanatory, innit?
         hyprland = {           		            # Default window manager
             enable = true;
+            withUWSM = true;
             xwayland.enable = true;
         };
         steam = {                  	            # Gaming platform
