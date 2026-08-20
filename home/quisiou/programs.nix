@@ -92,10 +92,6 @@ in
         };
         vesktop = {
             enable = true;
-            settings = {
-                minimizeToTray = true;
-                discordBranch = "stable";
-            };
             vencord.settings = {
                 autoUpdate = false;
                 autoUpdateNotification = false;
