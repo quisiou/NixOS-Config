@@ -7,6 +7,7 @@
         blueman.enable = true;
         avahi.enable = true;
         printing.enable = true;     # CUPS
+        upower.enable = true;
         pipewire = {    # Sound
             enable = true;
             alsa.enable = true;

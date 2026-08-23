@@ -2,8 +2,60 @@
 
 { config, pkgs, lib, ... }:
 
+let
+    dotsDir = "${config.home.homeDirectory}/Dotfiles";
+    setupMarker = "${dotsDir}/.setup_completed";
+    gitExec     = "${pkgs.git}/bin/git";
+in
 {
     home.activation = {
+        # Dotfiles management
+        cloneDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            (
+                if [ ! -d "${dotsDir}/.git" ]; then
+                    set -e
+
+                    # Ensure the directory exists (Home Manager might have created subfolders already)
+                    run mkdir -p "${dotsDir}"
+
+                    # Initialize Git in-place
+                    run "${gitExec}" -C "${dotsDir}" init
+                    run "${gitExec}" -C "${dotsDir}" remote add origin https://github.com/quisiou/Dotfiles.git
+
+                    # Fetch remote refs
+                    run "${gitExec}" -C "${dotsDir}" fetch origin
+                    
+                    # Track the main branch without overwriting pre-existing untracked files
+                    run "${gitExec}" -C "${dotsDir}" checkout -b main origin/main || run "${gitExec}" -C "${dotsDir}" checkout main
+                fi
+            )
+        '';
+        setupDotfiles = lib.hm.dag.entryAfter [ "cloneDotfiles" ] ''
+            (
+                if [ ! -d "${dotsDir}" ]; then
+                    echo "Dotfiles directory not found, skipping..."
+                    exit 0
+                fi
+
+                if [ -f "${setupMarker}" ]; then
+                    echo "Dotfiles already setup, skipping..."
+                    exit 0
+                fi
+
+                if [ ! -f "${dotsDir}/setup.sh" ]; then
+                    echo "Setup script not found, skipping..."
+                    exit 0
+                fi
+
+                echo "Running dotfiles setup..."
+                run ${pkgs.nix}/bin/nix-shell -I nixpkgs=${pkgs.path} \
+                    -p cmake glib pkg-config networkmanager alsa-lib ninja qt6.qtbase qt6.qtdeclarative spirv-tools \
+                    --run "export PATH=\$PATH:/run/current-system/sw/bin && ${dotsDir}/setup.sh -f -n"
+
+                run touch "${setupMarker}"
+            )
+        '';
+
         # Emulator setup scripts
         "setupDolphinEmu" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             APP_FILES_DIR="${config.home.homeDirectory}/AppFiles"
