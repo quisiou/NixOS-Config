@@ -52,6 +52,11 @@ in
                     -p cmake glib pkg-config networkmanager alsa-lib ninja qt6.qtbase qt6.qtdeclarative spirv-tools \
                     --run "export PATH=\$PATH:/run/current-system/sw/bin && ${dotsDir}/setup.sh -f -n"
 
+                # Symlink hyprland's theme.lua so nixOS declarative hyprland way does not break
+                HYPR_CONFIG_DIR="${config.home.homeDirectory}/.config/hypr"
+                run mkdir -p "$HYPR_CONFIG_DIR"
+                run ln -sf "${dotsDir}/hypr/theme.lua" "$HYPR_CONFIG_DIR/theme.lua"
+
                 run touch "${setupMarker}"
             )
         '';
