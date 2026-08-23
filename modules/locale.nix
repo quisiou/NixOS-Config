@@ -5,8 +5,8 @@
 {
     console.keyMap = "es";
 
-    # time.timeZone = "Europe/Madrid";
-    time.timeZone = "Europe/Lisbon";
+    time.timeZone = "Europe/Madrid";
+    # time.timeZone = "Europe/Lisbon";
 
     i18n = {
         defaultLocale = "en_US.UTF-8";
