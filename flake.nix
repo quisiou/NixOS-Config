@@ -13,6 +13,12 @@
             inputs.nixpkgs.follows = "nixpkgs";   # Avoids a second nixpkgs evaluation
         };
 
+        hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
+        hyprtasking = {
+            url = "github:raybbian/hyprtasking";
+            inputs.hyprland.follows = "hyprland";
+        };
+
         nix-vscode-extensions = {
             url = "github:nix-community/nix-vscode-extensions";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -36,6 +42,7 @@
                     nixpkgs.overlays = [ nix-vscode-extensions.overlays.default ];
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
+                    home-manager.extraSpecialArgs = { inherit inputs; };
                     home-manager.users.quisiou = import ./home/quisiou/home.nix;
                 }
             ];
