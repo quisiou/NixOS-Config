@@ -61,6 +61,18 @@
                     python3 "$HOME/.scripts/check_gow2018_hidraw.py"
                 '';
             };
+
+            "Devil May Cry HD Collection" = {
+                id = 631510;
+                compatTool = pkgs.ge-proton10-17;
+                env = {
+                    __NV_PRIME_RENDER_OFFLOAD = 1;
+                    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+                    __VK_LAYER_NV_optimus = "NVIDIA_only";
+                    PROTON_ENABLE_WAYLAND = 1;
+                };
+                wrappers = [ "gamemoderun" ];
+            };
         };
     };
 }
