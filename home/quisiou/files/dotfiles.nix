@@ -66,9 +66,7 @@
                         grid = {
                             rows = 3,
                             cols = 3,
-                            loop = true,
                             layers = 2,
-                            loop_layers = true,
                             gaps_use_aspect_ratio = true,
                         },
 
