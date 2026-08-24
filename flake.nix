@@ -13,10 +13,14 @@
             inputs.nixpkgs.follows = "nixpkgs";   # Avoids a second nixpkgs evaluation
         };
 
-        hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
+        hyprland.url = "github:hyprwm/Hyprland/v0.56.0";
         hyprtasking = {
             url = "github:raybbian/hyprtasking";
             inputs.hyprland.follows = "hyprland";
+        };
+        hyprglass-src = {
+            url = "github:hyprnux/hyprglass";
+            flake = false;
         };
 
         nix-vscode-extensions = {
@@ -30,9 +34,35 @@
         };
     };
 
-    outputs = inputs@{ self, nixpkgs, home-manager, nix-vscode-extensions, steam-config-nix, ... }: {
+    outputs = inputs@{ self, nixpkgs, home-manager, nix-vscode-extensions, steam-config-nix, ... }:
+    let
+        hostSystem = "x86_64-linux";
+        pkgs = import nixpkgs { system = hostSystem; };
+    in
+    {
+        packages.${hostSystem} = {
+            hyprglass = pkgs.stdenv.mkDerivation {
+                pname = "hyprglass";
+                version = "unstable";
+                src = inputs.hyprglass-src;
+
+                nativeBuildInputs = [
+                    pkgs.pkg-config
+                    pkgs.wayland-scanner
+                ];
+                buildInputs = [
+                    inputs.hyprland.packages.${hostSystem}.hyprland
+                ] ++ inputs.hyprland.packages.${hostSystem}.hyprland-unwrapped.buildInputs;
+
+                installPhase = ''
+                    mkdir -p $out/lib
+                    cp hyprglass.so $out/lib/libhyprglass.so
+                '';
+            };
+        };
+
         nixosConfigurations.chirimbolo = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
+            system = hostSystem;
             specialArgs = { inherit inputs; };
             modules = [
                 ./hosts/chirimbolo/configuration.nix

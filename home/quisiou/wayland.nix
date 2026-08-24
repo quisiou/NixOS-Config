@@ -45,7 +45,8 @@ in
         '';
 
         plugins = [
-            inputs.hyprtasking.packages.${pkgs.system}.hyprtasking
+            inputs.hyprtasking.packages.${pkgs.stdenv.hostPlatform.system}.hyprtasking
+            inputs.self.packages.x86_64-linux.hyprglass
         ];
     };
 
