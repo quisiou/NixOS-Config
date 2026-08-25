@@ -23,13 +23,21 @@
             '';
         };
 
-        ".scripts/check_gow2018_hidraw.py".text = ''
+        ".scripts/check_steam_game_hidraw.py".text = ''
+            import sys
             from pathlib import Path
 
 
-            targetSection:  str     = '[System\\ControlSet001\\Services\\winebus]'
+            if len(sys.argv) != 2:
+                sys.exit(f"Usage: {sys.argv[0]} <steam-app-id>")
+            
+            appId:          str     = sys.argv[1]
+            targetSection:  str     = r'[System\\ControlSet001\\Services\\winebus]'
             targetOption:   str     = '"DisableHidraw"=dword:00000001'
-            regPath:        Path    = Path.home() / ".steam" / "steam" / "steamapps" / "compatdata" / "1593500" / "pfx" / "system.reg"
+            regPath:        Path    = Path.home() / ".steam" / "steam" / "steamapps" / "compatdata" / appId / "pfx" / "system.reg"
+
+            if not regPath.exists():
+                sys.exit(f"No prefix registry found at {regPath} — has the game been run at least once?")
 
             with open(regPath, "r", encoding="utf-8", errors="ignore") as f:
                 lines = f.readlines()

@@ -58,7 +58,7 @@
                 };
                 wrappers = [ "gamemoderun" ];
                 preHook = ''
-                    python3 "$HOME/.scripts/check_gow2018_hidraw.py"
+                    python3 "$HOME/.scripts/check_steam_game_hidraw.py" 1593500
                 '';
             };
 
@@ -72,6 +72,9 @@
                     PROTON_ENABLE_WAYLAND = 1;
                 };
                 wrappers = [ "gamemoderun" ];
+                preHook = ''
+                    python3 "$HOME/.scripts/check_steam_game_hidraw.py" 631510
+                '';
             };
         };
     };
