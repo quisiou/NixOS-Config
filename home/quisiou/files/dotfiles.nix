@@ -25,6 +25,11 @@
                 hl.dsp.exec_cmd("pkill -SIGUSR1 -f 'gpu-screen-recorder -w'")
             )
 
+            hl.unbind(
+                Config.mainMod .. " + L",
+                hl.dsp.exec_cmd("qs -c shell ipc call controlMenu lockSession")
+            )
+
             -- hyprtasking
             hl.bind(Config.mainMod .. " + Tab", function() hl.plugin.hyprtasking.toggle("cursor") end)
 
