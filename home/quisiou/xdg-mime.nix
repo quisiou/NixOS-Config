@@ -17,6 +17,7 @@
             "text/plain"                = [ "nvim.desktop" ];
             "text/script.python"        = [ "nvim.desktop" ];
             "text/x-python"             = [ "nvim.desktop" ];
+            "inode/directory"           = [ "nvim.desktop" ];
         };
         associations.added = {
             "text/plain"                = [ "nvim.desktop" "codium.desktop" ];

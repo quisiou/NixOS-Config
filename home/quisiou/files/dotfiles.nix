@@ -86,5 +86,15 @@
             })
 
         '';
+        "Dotfiles/zsh/user/env.zsh".text = ''
+            #!/usr/bin/env zsh
+            # zsh/user/env.zsh
+
+
+            # Place your personal environment variables here...
+            export SSH_ASKPASS="$HOME/.config/quickshell/shell/scripts/ssh-askpass.sh"
+            export SSH_ASKPASS_REQUIRE=force
+
+        '';
     };
 }

@@ -56,9 +56,9 @@
         libnotify
 
         # Language support and LSP
-        gcc
+        gcc clang-tools
         tree-sitter
-        clang-tools
+        lua-language-server vim-language-server nixd marksman bash-language-server shellcheck basedpyright ruff
         texliveMedium
         (runCommand "qmlls" { } ''
             mkdir -p $out/bin
