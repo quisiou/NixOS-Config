@@ -56,6 +56,8 @@
         libnotify
 
         # Language support and LSP
+        gcc
+        tree-sitter
         clang-tools
         texliveMedium
         (runCommand "qmlls" { } ''
