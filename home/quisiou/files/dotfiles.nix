@@ -86,5 +86,20 @@
             })
 
         '';
+        "Dotfiles/hypr/user/windowrules.lua".text = ''
+            -- hypr/user/windowrules.lua
+
+
+            ----- USER'S CUSTOM WINDOW RULES CONFIGURATION --------------------------- #
+            hl.window_rule({
+                match = { class = "^(mpv)$" },
+                float = true
+            })
+
+            hl.window_rule({
+                match = { class = "^(imv)$" },
+                float = true
+            })
+        '';
     };
 }

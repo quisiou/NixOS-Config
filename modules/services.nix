@@ -8,7 +8,6 @@
         avahi.enable = true;
         printing.enable = true;     # CUPS
         upower.enable = true;
-        fwupd.enable = true;        # firmware updater
         pipewire = {    # Sound
             enable = true;
             alsa.enable = true;
