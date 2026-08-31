@@ -56,14 +56,21 @@
         libnotify
 
         # Language support and LSP
+        texliveMedium
         gcc clang-tools
         tree-sitter
         lua-language-server vim-language-server nixd marksman bash-language-server shellcheck basedpyright ruff
-        texliveMedium
-        (runCommand "qmlls" { } ''
-            mkdir -p $out/bin
-            ln -s ${qt6.qtdeclarative}/bin/qmlls $out/bin/qmlls
-        '') # Qt's QML lsp
+        (let
+            qmlImportPath = lib.makeSearchPath "lib/qt-6/qml" [ qt6.qtdeclarative quickshell ];
+        in symlinkJoin {
+            name = "qmlls";
+            paths = [ qt6.qtdeclarative ];
+            buildInputs = [ makeWrapper ];
+            postBuild = ''
+                wrapProgram $out/bin/qmlls \
+                    --set QML2_IMPORT_PATH "${qmlImportPath}"
+            '';
+        }) # Qt's QML lsp, wrapped with Quickshell + Qt6 base module paths
 
         # Other stuff
         bitwarden-desktop
