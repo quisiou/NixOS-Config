@@ -71,6 +71,7 @@ in
                     name = "quisiou";
                     email = "marco.casteleiro@gmail.com";
                 };
+                init.defaultBranch = "main";
             };
         }; 
         starship = {
@@ -131,8 +132,9 @@ in
             enable = true;
             enableCompletion = true;
             shellAliases = {
-                nrs = "sudo nixos-rebuild switch    --flake /etc/nixos#chirimbolo";
-                nrb = "sudo nixos-rebuild dry-build --flake /etc/nixos#chirimbolo";
+                "nrs"       =   "sudo nixos-rebuild switch    --flake /etc/nixos#chirimbolo";
+                "nrb"       =   "sudo nixos-rebuild dry-build --flake /etc/nixos#chirimbolo";
+                "uvinit"    =   "uv init && uv venv --seed && uv add ipykernel jupyter";
             };
             history = {
                 size = 10000;
