@@ -1,6 +1,7 @@
 # modules/programs.nix
 
-{ config, pkgs, lib, inputs, ... }:
+
+{ pkgs, inputs, ... }:
 
 {
     imports = [

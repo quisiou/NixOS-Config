@@ -1,6 +1,7 @@
 # modules/locale.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     console.keyMap = "es";

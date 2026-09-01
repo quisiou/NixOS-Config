@@ -1,6 +1,7 @@
 # modules/boot.nix
 
-{ config, pkgs, lib, ... }:
+
+{ pkgs, ... }:
 
 {
     boot = {

@@ -1,6 +1,7 @@
 # modules/users.nix
 
-{ config, pkgs, lib, ... }:
+
+{ pkgs, ... }:
 
 {
     users.users."quisiou" = {

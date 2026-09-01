@@ -1,6 +1,7 @@
 # modules/xdg.nix
 
-{ config, pkgs, lib, ... }:
+
+{ pkgs, ... }:
 
 {
     xdg.portal = {

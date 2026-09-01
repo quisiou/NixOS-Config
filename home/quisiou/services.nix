@@ -1,7 +1,7 @@
 # home/quisiou/services.nix
 
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
     services.ssh-agent.enable = true;

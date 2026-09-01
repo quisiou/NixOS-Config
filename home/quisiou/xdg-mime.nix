@@ -1,7 +1,7 @@
 # home/quisiou/xdg-mime.nix
 
 
-{ config, pkgs, lib, ... }:
+{ ... }:
 
 {
     xdg.mimeApps = {

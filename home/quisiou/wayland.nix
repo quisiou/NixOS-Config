@@ -1,7 +1,7 @@
 # home/quisiou/wayland.nix
 
 
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
     dotsDir = "${config.home.homeDirectory}/Dotfiles";

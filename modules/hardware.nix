@@ -1,6 +1,7 @@
 # modules/hardware.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     hardware = {

@@ -1,6 +1,7 @@
 # home/quisiou/files/steam.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     home.file = {
@@ -30,7 +31,7 @@
 
             if len(sys.argv) != 2:
                 sys.exit(f"Usage: {sys.argv[0]} <steam-app-id>")
-            
+
             appId:          str     = sys.argv[1]
             targetSection:  str     = r'[System\\ControlSet001\\Services\\winebus]'
             targetOption:   str     = '"DisableHidraw"=dword:00000001'

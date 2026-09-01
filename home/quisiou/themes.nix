@@ -1,7 +1,7 @@
-# home/quisiou/theme.nix
+# home/quisiou/themes.nix
 
 
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
     gtk = {

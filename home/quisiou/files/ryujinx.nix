@@ -1,6 +1,7 @@
 # home/quisiou/files/ryujinx.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     home.file = {
@@ -21,7 +22,7 @@
                 "audio_backend": "SDL2"
             }
         '';
-        
+
         ".scripts/configure_ryujinx.sh" = {
             executable = true;
             text = ''

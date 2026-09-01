@@ -1,6 +1,7 @@
 # modules/networking.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     networking = {

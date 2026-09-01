@@ -1,5 +1,7 @@
 # home/quisiou/files/dotfiles.nix
-{ config, pkgs, lib, ... }:
+
+
+{ ... }:
 
 {
     home.file = {

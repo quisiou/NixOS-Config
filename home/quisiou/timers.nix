@@ -1,7 +1,7 @@
 # home/quisiou/timers.nix
 
 
-{ config, pkgs, lib, ... }:
+{ ... }:
 
 {
     systemd.user.timers = {

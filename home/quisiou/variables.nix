@@ -1,7 +1,7 @@
 # home/quisiou/variables.nix
 
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
     home.sessionVariables = {

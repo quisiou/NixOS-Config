@@ -1,6 +1,7 @@
 # home/quisiou/files/dolphin-emu.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     home.file = {
@@ -95,7 +96,7 @@
             IMUGyroscope/Yaw Left = `Gyro Yaw Left`
             IMUGyroscope/Yaw Right = `Gyro Yaw Right`
         '';
-        
+
         ".scripts/configure_dolphin-emu.sh" = {
             executable = true;
             text = ''
@@ -129,7 +130,7 @@
                 merge_config "$CUSTOM_GFX_INI" "$GFX_INI"
                 merge_config "$CUSTOM_QT_INI" "$QT_INI"
                 merge_config "$CUSTOM_WIIMOTE_INI" "$WIIMOTE_INI"
-                
+
                 crudini --set "$DOLPHIN_INI" General ISOPath0 "$HOME/.config/dolphin-emu/games"
             '';
         };

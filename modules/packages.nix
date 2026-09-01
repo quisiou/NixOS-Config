@@ -1,6 +1,7 @@
 # modules/packages.nix
 
-{ config, pkgs, lib, ... }:
+
+{ pkgs, ... }:
 
 {
     # To expose a single binary from a package without installing the whole thing,

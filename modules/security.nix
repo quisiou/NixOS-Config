@@ -1,6 +1,7 @@
 # modules/security.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     security = {

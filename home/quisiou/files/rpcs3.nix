@@ -1,6 +1,7 @@
 # home/quisiou/files/rpcs3.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     home.file = {
@@ -25,7 +26,7 @@
                 Resolution Scale: 200
                 Write Color Buffers: false
         '';
-        
+
         "AppFiles/RPCS3/pad_config.yml".text = ''
             Player 1 Input:
                 Handler: SDL

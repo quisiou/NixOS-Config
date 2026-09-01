@@ -1,5 +1,6 @@
 # home/quisiou/scripts.nix
 
+
 { config, pkgs, lib, ... }:
 
 let
@@ -24,7 +25,7 @@ in
 
                     # Fetch remote refs
                     run "${gitExec}" -C "${dotsDir}" fetch origin
-                    
+
                     # Track the main branch without overwriting pre-existing untracked files
                     run "${gitExec}" -C "${dotsDir}" checkout -b main origin/main || run "${gitExec}" -C "${dotsDir}" checkout main
                 fi
@@ -72,7 +73,7 @@ in
 
             $DRY_RUN_CMD echo "Creating games directory..."
             $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
-            
+
             # Ensure Dolphin directories exist
             $DRY_RUN_CMD mkdir -p "$CONFIG_DIR"
             $DRY_RUN_CMD echo "Linking games directory..."
@@ -100,7 +101,7 @@ in
 
                 $DRY_RUN_CMD mkdir -p "$TARGET_DIR"
                 $DRY_RUN_CMD mkdir -p "$BIOS_DIR"
-                
+
                 $DRY_RUN_CMD ${pkgs.nix}/bin/nix-shell -p python3Packages.gdown \
                     --run "gdown 'https://drive.google.com/uc?id=1th7MY7cNvm2pxHwY2q1hFcbLLOI878xN' -O '$TAR_GZ_FILENAME'" \
                     && tar -xzf "$TAR_GZ_FILENAME" -C "$BIOS_DIR" \
@@ -116,7 +117,7 @@ in
                 fi
                 $DRY_RUN_CMD ln -sfn "$BIOS_DIR" "$CONFIG_BIOS_DIR"
             fi
-            
+
             $DRY_RUN_CMD echo "Creating and linking memory cards directory..."
             $DRY_RUN_CMD mkdir -p "$MEMCARDS_DIR"
             $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_MEMCARDS_DIR")"
@@ -165,7 +166,7 @@ in
             fi
 
             if [ -f "$COMPLETION_FILE" ]; then
-                $DRY_RUN_CMD mkdir -p "$GAMES_DIR"  
+                $DRY_RUN_CMD mkdir -p "$GAMES_DIR"
                 $DRY_RUN_CMD echo "Linking games directory..."
                 $DRY_RUN_CMD mkdir -p "$(dirname "$CONFIG_GAMES_DIR")"
                 if [ -d "$CONFIG_GAMES_DIR" ] && [ ! -L "$CONFIG_GAMES_DIR" ]; then
@@ -202,7 +203,7 @@ in
                 $DRY_RUN_CMD echo "Downloading Ryujinx meta files from Google Drive..."
 
                 $DRY_RUN_CMD mkdir -p "$TARGET_DIR"
-                
+
                 $DRY_RUN_CMD ${pkgs.nix}/bin/nix-shell -p python3Packages.gdown \
                     --run "gdown 'https://drive.google.com/uc?id=1s6fLOsalUYLnsMQC8785-CqfVLqIWegr' -O '$TAR_GZ_FILENAME'" \
                     && tar -xzf "$TAR_GZ_FILENAME" -C "$TARGET_DIR" \

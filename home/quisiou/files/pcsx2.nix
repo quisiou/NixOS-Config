@@ -1,6 +1,7 @@
 # home/quisiou/files/pcsx2.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     home.file = {
@@ -56,7 +57,7 @@
             LargeMotor = SDL-0/LargeMotor
             SmallMotor = SDL-0/SmallMotor
         '';
-        
+
         ".scripts/configure_pcsx2.sh" = {
             executable = true;
             text = ''
@@ -64,7 +65,7 @@
 
                 CUSTOM_CONFIG_INI="$HOME/AppFiles/PCSX2/config.ini"
                 CONFIG_INI="$HOME/.config/PCSX2/inis/PCSX2.ini"
-                
+
                 mkdir -p "$(dirname "$CONFIG_INI")"
                 if [ ! -f "$CONFIG_INI" ]; then
                     cp --no-preserve=mode "$CUSTOM_CONFIG_INI" "$CONFIG_INI"

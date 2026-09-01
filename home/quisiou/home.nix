@@ -1,7 +1,7 @@
 # home/quisiou/home.nix
 
 
-{ config, pkgs, lib, ... }:
+{ ... }:
 
 {
     imports = [
@@ -9,7 +9,7 @@
         ./programs.nix
         ./scripts.nix
         ./services.nix
-        ./theme.nix
+        ./themes.nix
         ./timers.nix
         ./variables.nix
         ./wayland.nix

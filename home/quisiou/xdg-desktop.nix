@@ -1,7 +1,7 @@
 # home/quisiou/xdg-desktop.nix
 
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 let
     dolphinEmuLauncher = pkgs.writeShellScript "dolphin-emu-launcher" ''

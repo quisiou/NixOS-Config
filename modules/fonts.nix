@@ -1,6 +1,7 @@
 # modules/fonts.nix
 
-{ config, pkgs, lib, ... }:
+
+{ pkgs, ... }:
 
 {
     fonts.packages = with pkgs; [

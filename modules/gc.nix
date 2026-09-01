@@ -1,6 +1,7 @@
 # modules/gc.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     nix.gc = {

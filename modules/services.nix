@@ -1,6 +1,7 @@
 # modules/services.nix
 
-{ config, pkgs, lib, ... }:
+
+{ ... }:
 
 {
     services = {

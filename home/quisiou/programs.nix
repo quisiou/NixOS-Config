@@ -1,6 +1,7 @@
 # home/quisiou/programs.nix
 
-{ config, pkgs, lib, ... }:
+
+{ config, pkgs, ... }:
 
 let
     mkFirefoxAddon = { name, addonId, url, hash }:
@@ -73,7 +74,7 @@ in
                 };
                 init.defaultBranch = "main";
             };
-        }; 
+        };
         starship = {
             enable = true;
             enableZshIntegration = true;
