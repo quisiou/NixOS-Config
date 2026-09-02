@@ -436,6 +436,46 @@
         "type": "github"
       }
     },
+    "minegrub-theme": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787822983,
+        "narHash": "sha256-wusELfq9vxbkbZy8cPprcOldqoqSbKltxt++EW9gQ9g=",
+        "owner": "Lxtharia",
+        "repo": "minegrub-theme",
+        "rev": "89f9e24f44cbe06b11d69068e39f534666e4d3d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lxtharia",
+        "repo": "minegrub-theme",
+        "type": "github"
+      }
+    },
+    "minegrub-world-sel-theme": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786660689,
+        "narHash": "sha256-Hlp081T6HUd4n6CaTf3aousZwBuBly6+0T+Y2d5y+SE=",
+        "owner": "Lxtharia",
+        "repo": "minegrub-world-sel-theme",
+        "rev": "29bfe180a086454e8cd7a690ed0a0d0ed10446c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lxtharia",
+        "repo": "minegrub-world-sel-theme",
+        "type": "github"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "nixpkgs": [
@@ -531,6 +571,8 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "hyprtasking": "hyprtasking",
+        "minegrub-theme": "minegrub-theme",
+        "minegrub-world-sel-theme": "minegrub-world-sel-theme",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-stable": "nixpkgs-stable",

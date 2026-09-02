@@ -27,11 +27,11 @@
     ];
 
 
-    # --- Boot kernel parameters -----------------------------------------
-    boot.kernelParams = [
-        "nvidia_drm.modeset=1"
-        "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-    ];
+    # --- Boot related stuff -----------------------------------------
+    boot = {
+        kernelParams = [ "nvidia_drm.modeset=1" "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+        loader.grub.gfxmodeEfi = "2560x1600";
+    };
 
 
     # --- Hardware -------------------------------------

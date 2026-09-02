@@ -28,9 +28,19 @@
             url = "github:different-name/steam-config-nix";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        minegrub-theme = {
+            url = "github:Lxtharia/minegrub-theme";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+
+        minegrub-world-sel-theme = {
+            url = "github:Lxtharia/minegrub-world-sel-theme";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
-    outputs = inputs@{ self, nixpkgs, home-manager, nix-vscode-extensions, steam-config-nix, ... }: {
+    outputs = inputs @ { self, nixpkgs, home-manager, nix-vscode-extensions, steam-config-nix, ... }: {
         nixosConfigurations.chirimbolo = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = { inherit inputs; };
@@ -38,6 +48,8 @@
                 ./hosts/chirimbolo/configuration.nix
                 home-manager.nixosModules.home-manager
                 inputs.steam-config-nix.nixosModules.default
+                inputs.minegrub-theme.nixosModules.default
+                inputs.minegrub-world-sel-theme.nixosModules.default
                 {
                     nixpkgs.overlays = [ nix-vscode-extensions.overlays.default ];
                     home-manager.useGlobalPkgs = true;
