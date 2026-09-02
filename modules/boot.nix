@@ -6,9 +6,13 @@
 {
     boot = {
         loader = {
-            systemd-boot = {
+            systemd-boot.enable = false;
+            grub = {
                 enable = true;
-                configurationLimit = 5; # Max number of generations showed on boot
+                efiSupport = true;
+                device = "nodev"; # EFI-only, no MBR write
+                useOSProber = false; # true if dual-boot another OS
+                configurationLimit = 5; # keep last 5 generations
             };
             efi.canTouchEfiVariables = true;
         };
