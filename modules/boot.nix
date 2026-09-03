@@ -39,7 +39,7 @@ in
                 efiSupport = true;
                 device = "nodev"; # EFI-only, no MBR write
                 useOSProber = false; # true if dual-boot another OS
-                configurationLimit = 3; # keep last 5 generations
+                configurationLimit = 5; # keep last N generations
 
                 minegrub-world-sel = {
                     enable = true;
@@ -61,18 +61,21 @@ in
                     fi
                 '';
 
-                extraFiles = {
-                    "mainmenu.cfg" = ./grub/mainmenu.cfg;
-                };
-
                 # Split the generated grub.cfg into "current entries" and "old generations",
                 # and make grub load mainmenu.cfg first, declaratively.
                 extraInstallCommands = ''
                     GRUB_DIR="/boot/grub"
 
+                    ${pkgs.coreutils}/bin/install -Dm644 ${./grub/mainmenu.cfg} "$GRUB_DIR/mainmenu.cfg"
+
                     # --- theme placement ---
                     ${pkgs.coreutils}/bin/mkdir -p "$GRUB_DIR/themes/minegrub"
                     ${pkgs.coreutils}/bin/cp -a ${minegrubTheme}/grub/themes/minegrub/. "$GRUB_DIR/themes/minegrub/"
+
+                    SCALED_BG="${inputs.minegrub-world-sel-theme}/assets/background-scaled/background-2560x1600.png"
+                    if [ -f "$SCALED_BG" ]; then
+                        ${pkgs.coreutils}/bin/cp -f "$SCALED_BG" "/boot/theme/background.png"
+                    fi
 
                     CFG="$GRUB_DIR/grub.cfg"
 
