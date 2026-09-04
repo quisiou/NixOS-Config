@@ -54,6 +54,7 @@
         wlopm
         pavucontrol
         libnotify
+        cava
 
         # Language support and LSP
         texliveMedium
