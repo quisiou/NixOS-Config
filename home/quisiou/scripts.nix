@@ -51,7 +51,7 @@ in
                 echo "Running dotfiles setup..."
                 run ${pkgs.nix}/bin/nix-shell -I nixpkgs=${pkgs.path} \
                     -p cmake glib pkg-config networkmanager alsa-lib ninja qt6.qtbase qt6.qtdeclarative spirv-tools \
-                    --run "export PATH=\$PATH:/run/current-system/sw/bin && ${dotsDir}/setup.sh -f -n"
+                    --run "export PATH=\$PATH:/run/current-system/sw/bin && ${dotsDir}/setup.sh --hypr-n --zsh-n"
 
                 # Symlink hyprland's theme.lua so nixOS declarative hyprland way does not break
                 HYPR_CONFIG_DIR="${config.home.homeDirectory}/.config/hypr"
