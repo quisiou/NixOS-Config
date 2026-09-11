@@ -1,11 +1,8 @@
 # home/quisiou/wayland.nix
 
 
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
-let
-    dotsDir = "${config.home.homeDirectory}/Dotfiles";
-in
 {
     wayland.windowManager.hyprland = {
         enable = true;
@@ -47,10 +44,5 @@ in
         plugins = [
             inputs.hyprtasking.packages.${pkgs.stdenv.hostPlatform.system}.hyprtasking
         ];
-    };
-
-    home.file = {
-        ".config/hypr/default".source = config.lib.file.mkOutOfStoreSymlink "${dotsDir}/hypr/default";
-        ".config/hypr/user".source = config.lib.file.mkOutOfStoreSymlink "${dotsDir}/hypr/user";
     };
 }

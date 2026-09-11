@@ -21,9 +21,6 @@
         # Python-related
         uv
 
-        # Text editors
-        neovim
-
         # Image editors and viewers
         gimp inkscape imv
 

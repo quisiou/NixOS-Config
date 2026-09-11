@@ -75,6 +75,21 @@ in
                 init.defaultBranch = "main";
             };
         };
+        neovim = {
+            enable = true;
+            defaultEditor = true;
+
+            viAlias = true;
+            vimAlias = true;
+
+            extraPackages = with pkgs; [ (python3.withPackages (ps: [ ps.jupytext ])) ];
+
+            initLua = ''
+                require("options")
+                require("keymaps")
+                require("lazy-config")
+            '';
+        };
         starship = {
             enable = true;
             enableZshIntegration = true;
