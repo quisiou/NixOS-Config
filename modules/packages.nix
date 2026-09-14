@@ -21,6 +21,9 @@
 
         # Python3 with some libraries
         (python3.withPackages (ps: with ps; [ jinja2 ]))
+
+        # Virtualisation
+        virt-manager qemu spice-gtk virtiofsd
     ];
 
     # Allow unfree packages

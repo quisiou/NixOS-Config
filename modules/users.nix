@@ -14,6 +14,9 @@
             "audio"
             "gamemode"
             "input"
+
+            "libvirtd"
+            "kvm"
         ];
         shell = pkgs.zsh;
     };

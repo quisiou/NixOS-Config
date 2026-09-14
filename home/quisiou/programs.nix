@@ -75,6 +75,10 @@ in
                 init.defaultBranch = "main";
             };
         };
+        mpv = {
+            enable = true;
+            config.hwdec = "auto";
+        };
         neovim = {
             enable = true;
             defaultEditor = true;

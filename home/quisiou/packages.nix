@@ -24,9 +24,6 @@
         # Image editors and viewers
         gimp inkscape imv
 
-        # Video viewer
-        mpv
-
         # Other editors
         blender
 
