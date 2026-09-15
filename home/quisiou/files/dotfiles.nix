@@ -121,5 +121,9 @@ in
             source = config.lib.file.mkOutOfStoreSymlink "${dotsDir}/nvim/colors";
             recursive = true;
         };
+        ".config/lazygit/config.yml".text = ''
+            git:
+                autoFetch: false
+        '';
     };
 }
