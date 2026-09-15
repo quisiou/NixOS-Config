@@ -75,6 +75,11 @@ in
                 init.defaultBranch = "main";
             };
         };
+        lazygit = {
+            enable = true;
+            enableZshIntegration = true;
+            settings.git.autoFetch = false;
+        };
         mpv = {
             enable = true;
             config.hwdec = "auto";

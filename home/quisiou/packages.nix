@@ -17,7 +17,6 @@
 
         # Terminal (and tools)
         kitty starship fastfetch pokeget-rs
-        lazygit
 
         # Python-related
         uv
