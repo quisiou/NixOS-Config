@@ -1,13 +1,20 @@
 # modules/services.nix
 
 
-{ ... }:
+{ pkgs, ... }:
 
 {
     services = {
         blueman.enable = true;
-        avahi.enable = true;
-        printing.enable = true;     # CUPS
+        avahi = {
+            enable = true;
+            nssmdns4 = true;
+            openFirewall = true;
+        };
+        printing = {    # CUPS
+            enable = true;
+            drivers = with pkgs; [ hplip ];
+        };
         upower.enable = true;
         pipewire = {    # Sound
             enable = true;

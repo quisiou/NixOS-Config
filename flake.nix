@@ -38,6 +38,11 @@
             url = "github:Lxtharia/minegrub-world-sel-theme";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        dotfiles = {
+            url = "path:/home/quisiou/Dotfiles";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = inputs @ { self, nixpkgs, home-manager, nix-vscode-extensions, steam-config-nix, ... }: {
@@ -55,7 +60,12 @@
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
                     home-manager.extraSpecialArgs = { inherit inputs; };
-                    home-manager.users.quisiou = import ./home/quisiou/home.nix;
+                    home-manager.users.quisiou = {
+                        imports = [
+                            ./home/quisiou/home.nix
+                            inputs.dotfiles.homeManagerModules.default
+                        ];
+                    };
                 }
             ];
         };

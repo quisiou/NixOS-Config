@@ -91,7 +91,12 @@ in
             viAlias = true;
             vimAlias = true;
 
-            extraPackages = with pkgs; [ (python3.withPackages (ps: [ ps.jupytext ])) ];
+            extraPackages = with pkgs; [
+                (python3.withPackages (ps: with ps; [
+                    jupytext
+                    pylatexenc
+                ]))
+            ];
 
             initLua = ''
                 require("options")
