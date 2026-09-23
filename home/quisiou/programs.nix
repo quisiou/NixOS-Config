@@ -19,6 +19,11 @@ let
 in
 {
     programs = {
+        direnv = {
+            enable = true;
+            enableZshIntegration = true;
+            nix-direnv.enable = true;
+        };
         firefox = {
             enable = true;
             profiles."quisiou" = {

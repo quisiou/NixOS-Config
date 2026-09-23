@@ -53,7 +53,6 @@
         cava
 
         # Language support and LSP
-        texliveMedium
         gcc clang-tools
         tree-sitter
         lua-language-server vim-language-server nixd marksman bash-language-server shellcheck basedpyright ruff
@@ -72,5 +71,6 @@
         # Other stuff
         bitwarden-desktop
         qbittorrent
+        zulip
     ];
 }
