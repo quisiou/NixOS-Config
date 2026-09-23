@@ -19,6 +19,9 @@
         # Basic utilities
         zsh wget curl
 
+        # Manual documentation
+        man-pages man-pages-posix
+
         # Python3 with some libraries
         (python3.withPackages (ps: with ps; [ jinja2 ]))
 
