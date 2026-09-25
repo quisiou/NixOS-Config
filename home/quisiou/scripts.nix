@@ -15,19 +15,15 @@ let
         ];
 
         issuesSections = [
-            {
-                title = "My Issues";
-                filters = "is:open author:@me";
-            }
-            {
-                title = "Assigned";
-                filters = "is:open involves:@me -author:@me";
-            }
+            { title = "My Issues";          filters = "is:open author:@me"; }
+            { title = "Assigned";           filters = "is:open involves:@me -author:@me"; }
         ];
 
         defaults = {
+            view = "issues";
             preview = {
                 open = true;
+                position = "right";
                 width = 60;
             };
             layout = {
@@ -41,17 +37,24 @@ let
         };
 
         keybindings = {
+            universal = [
+                {
+                    key = "O";
+                    name = "open in GitHub";
+                    builtin = "openGithub";
+                }
+            ];
             issues = [
                 {
-                    key = "e";
-                    name = "edit in octo";
+                    key = "o";
+                    name = "open in octo";
                     command = ''nvim -c "lua require('lazy').load({plugins={'octo.nvim'}})" -c "e octo://{{.RepoName}}/issue/{{.IssueNumber}}"'';
                 }
             ];
             prs = [
                 {
-                    key = "e";
-                    name = "edit in octo";
+                    key = "o";
+                    name = "open in octo";
                     command = ''nvim -c "lua require('lazy').load({plugins={'octo.nvim'}})" -c "e octo://{{.RepoName}}/pull/{{.PrNumber}}"'';
                 }
             ];
