@@ -7,6 +7,57 @@ let
     dotsDir = "${config.home.homeDirectory}/Dotfiles";
     setupMarker = "${dotsDir}/.setup_completed";
     gitExec     = "${pkgs.git}/bin/git";
+
+    ghDashStaticConfig = {
+        prSections = [
+            { title = "My Pull Requests";   filters = "is:open author:@me"; }
+            { title = "Needs My Review";    filters = "is:open review-requested:@me"; }
+        ];
+
+        issuesSections = [
+            {
+                title = "My Issues";
+                filters = "is:open author:@me";
+            }
+            {
+                title = "Assigned";
+                filters = "is:open involves:@me -author:@me";
+            }
+        ];
+
+        defaults = {
+            preview = {
+                open = true;
+                width = 60;
+            };
+            layout = {
+                issues = {
+                    repo.width = 20;
+                    creator.hidden = true;
+                    assignees.hidden = false;
+                    updatedAt.hidden = true;
+                };
+            };
+        };
+
+        keybindings = {
+            issues = [
+                {
+                    key = "e";
+                    name = "edit in octo";
+                    command = ''nvim -c "lua require('lazy').load({plugins={'octo.nvim'}})" -c "e octo://{{.RepoName}}/issue/{{.IssueNumber}}"'';
+                }
+            ];
+            prs = [
+                {
+                    key = "e";
+                    name = "edit in octo";
+                    command = ''nvim -c "lua require('lazy').load({plugins={'octo.nvim'}})" -c "e octo://{{.RepoName}}/pull/{{.PrNumber}}"'';
+                }
+            ];
+        };
+    };
+    ghDashStaticConfigFile = pkgs.writeText "gh-dash-static.yml" (builtins.toJSON ghDashStaticConfig);
 in
 {
     home.activation = {
@@ -265,6 +316,31 @@ in
             else
                 $DRY_RUN_CMD echo "{\"vencordDir\": \"$VENCORD_DIR\"}" > "$STATE_FILE"
             fi
+        '';
+
+        # gh-dash settings
+        ghDashConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            CONFIG_DIR="$HOME/.config/gh-dash"
+            mkdir -p "$CONFIG_DIR"
+
+            ${pkgs.yq-go}/bin/yq eval-all '. as $item ireduce ({}; . * $item)' \
+            ${ghDashStaticConfigFile} > "$CONFIG_DIR/config.yml.tmp"
+
+            # Get "org/repo" for every repo you have access to, grouped by org
+            repos=$(${pkgs.gh}/bin/gh api user/repos --paginate --jq '.[].full_name' 2>/dev/null || echo "")
+
+            # Extract unique org names from those repo full_names
+            orgs=$(echo "$repos" | cut -d/ -f1 | sort -u)
+
+            for org in $orgs; do
+                repo_filters=$(echo "$repos" | grep "^$org/" | sed 's/^/repo:/' | tr '\n' ' ')
+
+                ${pkgs.yq-go}/bin/yq eval -i \
+                    ".issuesSections += [{\"title\": \"$org Issues\", \"filters\": \"is:open $repo_filters\"}]" \
+                    "$CONFIG_DIR/config.yml.tmp"
+            done
+
+            mv "$CONFIG_DIR/config.yml.tmp" "$CONFIG_DIR/config.yml"
         '';
     };
 }

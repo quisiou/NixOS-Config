@@ -70,6 +70,23 @@ in
                 };
             };
         };
+        gh = {
+            enable = true;
+
+            settings = {
+                git_protocol = "ssh";
+                prompt = "enabled";
+                prefer_editor_prompt = "disabled";
+                color_labels = "disabled";
+                accessible_colors = "disabled";
+                accessible_prompter = "disabled";
+                spinner = "enabled";
+
+                aliases = {
+                    co = "pr checkout";
+                };
+            };
+        };
         git = {
             enable = true;
             settings = {
