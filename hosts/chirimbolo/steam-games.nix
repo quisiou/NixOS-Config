@@ -30,7 +30,7 @@
 
             "The Witcher 3" = {
                 id = 292030;
-                compatTool = pkgs.ge-proton10-28;
+                compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
                     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -48,7 +48,7 @@
                 # [System\\ControlSet001\\Services\\winebus] 1767307594
                 # "DisableHidraw"=dword:00000001
                 id = 1593500;
-                compatTool = pkgs.ge-proton10-28;
+                compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
                     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -57,9 +57,9 @@
                     PROTON_ENABLE_NGX_UPDATER = 1;
                 };
                 wrappers = [ "gamemoderun" ];
-                preHook = ''
-                    python3 "$HOME/.scripts/check_steam_game_hidraw.py" 1593500
-                '';
+                # preHook = ''
+                #     python3 "$HOME/.scripts/check_steam_game_hidraw.py" 1593500
+                # '';
             };
 
             "Devil May Cry HD Collection" = {
@@ -72,9 +72,58 @@
                     PROTON_ENABLE_WAYLAND = 1;
                 };
                 wrappers = [ "gamemoderun" ];
-                preHook = ''
-                    python3 "$HOME/.scripts/check_steam_game_hidraw.py" 631510
-                '';
+                # preHook = ''
+                #     python3 "$HOME/.scripts/check_steam_game_hidraw.py" 631510
+                # '';
+            };
+
+            "Darksiders Warmastered Edition" = {
+                id = 462780;
+                compatTool = pkgs.ge-proton11-7;
+                env = {
+                    __NV_PRIME_RENDER_OFFLOAD = 1;
+                    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+                    __VK_LAYER_NV_optimus = "NVIDIA_only";
+                    PROTON_ENABLE_WAYLAND = 1;
+                };
+                wrappers = [ "gamemoderun" ];
+            };
+
+            "Darksiders II Deathinitive Edition" = {
+                id = 388410;
+                compatTool = pkgs.ge-proton11-7;
+                env = {
+                    __NV_PRIME_RENDER_OFFLOAD = 1;
+                    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+                    __VK_LAYER_NV_optimus = "NVIDIA_only";
+                    PROTON_ENABLE_WAYLAND = 1;
+                };
+                wrappers = [ "gamemoderun" ];
+            };
+
+            "Darksiders III" = {
+                id = 606280;
+                compatTool = pkgs.ge-proton11-7;
+                env = {
+                    __NV_PRIME_RENDER_OFFLOAD = 1;
+                    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+                    __VK_LAYER_NV_optimus = "NVIDIA_only";
+                    PROTON_ENABLE_WAYLAND = 1;
+                    PROTON_ENABLE_NGX_UPDATER = 1;  # DLSS support, worth having on the 5060
+                };
+                wrappers = [ "gamemoderun" ];
+            };
+
+            "Darksiders Genesis" = {
+                id = 710920;
+                compatTool = pkgs.ge-proton11-7;
+                env = {
+                    __NV_PRIME_RENDER_OFFLOAD = 1;
+                    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+                    __VK_LAYER_NV_optimus = "NVIDIA_only";
+                    PROTON_ENABLE_WAYLAND = 1;
+                };
+                wrappers = [ "gamemoderun" ];
             };
         };
     };
