@@ -16,6 +16,29 @@ let
         passthru = { inherit addonId; };
         meta.description = name;
     };
+
+    schemaGraphql = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/octokit/graphql-schema/baf144f319c7705e822de9a26f05d12e1c7c9df4/schema.graphql";
+        hash = "sha256-PGLQUm0TPO5TIhyJ3ptFWt4k23i5561W1kLEwVvOJlQ=";
+    };
+
+    gh-board = pkgs.rustPlatform.buildRustPackage {
+        pname = "gh-board";
+        version = "1.5.0";
+
+        src = pkgs.fetchFromGitHub {
+            owner = "uzimaru0000";
+            repo = "gh-board";
+            rev = "c134bead3e8360c0b43a4948f5bebcee4314ddbd";
+            hash = "sha256-gYoNRBQiSAim3/PAo6DSAbDvlaWQnGDTZyXvfnu4Qsc=";
+        };
+
+        cargoHash = "sha256-zlX2ooybGYX1vnl9ajGZhN5nDQ/QyqmSH4uwXbD/cBk=";
+
+        postPatch = ''
+            cp ${schemaGraphql} schema.graphql
+        '';
+    };
 in
 {
     programs = {
@@ -85,6 +108,8 @@ in
                 aliases = {
                     co = "pr checkout";
                 };
+
+            extensions = [ gh-board ];
             };
         };
         git = {
