@@ -4,11 +4,11 @@
 { config, ... }:
 
 let
-    dotsDir = "${config.home.homeDirectory}/Dotfiles";
+    configDir = "${config.home.homeDirectory}/.config";
 in
 {
     home.file = {
-        "${dotsDir}/quickshell/shell/quickapps.json".text = ''
+        "${configDir}/quickshell/shell/quickapps.json".text = ''
             [
                 "codium",
                 "firefox",
@@ -20,7 +20,8 @@ in
                 "org.musescore.MuseScore"
             ]
         '';
-        "${dotsDir}/hypr/user/keybinds.lua".text = ''
+
+        "${configDir}/hypr/user/keybinds.lua".text = ''
             -- hypr/user/keybinds.lua
 
 
@@ -51,7 +52,8 @@ in
             hl.bind("SUPER + L", function() hl.plugin.hyprtasking.move("right") end)
 
         '';
-        "${dotsDir}/hypr/user/look_and_feel.lua".text = ''
+
+        "${configDir}/hypr/user/look_and_feel.lua".text = ''
             -- hypr/user/look_and_feel.lua
 
 
@@ -91,7 +93,8 @@ in
             })
 
         '';
-        "${dotsDir}/hypr/user/windowrules.lua".text = ''
+
+        "${configDir}/hypr/user/windowrules.lua".text = ''
             -- hypr/user/windowrules.lua
 
 
@@ -111,15 +114,5 @@ in
                 float = true
             })
         '';
-        ".config/hypr/default".source = config.lib.file.mkOutOfStoreSymlink "${dotsDir}/hypr/default";
-        ".config/hypr/user".source = config.lib.file.mkOutOfStoreSymlink "${dotsDir}/hypr/user";
-        ".config/nvim/lua" = {
-            source = config.lib.file.mkOutOfStoreSymlink "${dotsDir}/nvim/lua";
-            recursive = true;
-        };
-        ".config/nvim/colors" = {
-            source = config.lib.file.mkOutOfStoreSymlink "${dotsDir}/nvim/colors";
-            recursive = true;
-        };
     };
 }

@@ -224,14 +224,14 @@ in
             };
             profileExtra = ''
                 # Source default profile config
-                [ -f "$HOME/.config/zsh/default/profile.zsh" ] && . "$HOME/.config/zsh/default/profile.zsh"
+                [ -f "$HOME/.config/zsh/profile.zsh" ] && . "$HOME/.config/zsh/profile.zsh"
 
                 # Source user profile config
                 [ -f "$HOME/.config/zsh/user/profile.zsh" ] && . "$HOME/.config/zsh/user/profile.zsh"
             '';
             envExtra = ''
                 # Source default environment variables
-                [ -f "$HOME/.config/zsh/default/env.zsh" ] && . "$HOME/.config/zsh/default/env.zsh"
+                [ -f "$HOME/.config/zsh/env.zsh" ] && . "$HOME/.config/zsh/env.zsh"
 
                 # Source personal environment variables
                 [ -f "$HOME/.config/zsh/user/env.zsh" ] && . "$HOME/.config/zsh/user/env.zsh"
@@ -246,7 +246,7 @@ in
                 fi
 
                 # Source default main config
-                [ -f "$HOME/.config/zsh/default/main.zsh" ] && . "$HOME/.config/zsh/default/main.zsh"
+                [ -f "$HOME/.config/zsh/main.zsh" ] && . "$HOME/.config/zsh/main.zsh"
 
                 # Source user main config
                 [ -f "$HOME/.config/zsh/user/main.zsh" ] && . "$HOME/.config/zsh/user/main.zsh"
