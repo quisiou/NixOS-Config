@@ -113,27 +113,6 @@ in
                 };
             };
         };
-        mpv = {
-            type = "Application";
-            name = "MPV Media Player";
-            genericName = "Multimedia player";
-            comment = "Play movies and songs";
-            icon = "mpv";
-            exec = "mpv --player-operation-mode=pseudo-gui -- %U";
-            terminal = false;
-            startupNotify = false;
-            categories = [
-                "AudioVideo"
-                "Audio"
-                "Video"
-                "Player"
-                "TV"
-            ];
-            settings = {
-                Keywords = "mpv;media;player;video;audio;tv";
-            };
-            noDisplay = true;
-        };
         nvim = {
             type = "Application";
             name = "Neovim";
@@ -256,6 +235,33 @@ in
                 Keywords = "discord;vencord;electron;chat";
                 StartupWMClass = "Vesktop";
             };
+        };
+
+        # No Display (hide)
+        "blueman-adapters" = {
+            type = "Application";
+            name = "Bluetooth Adapters";
+            noDisplay = true;
+        };
+        mpv = {
+            type = "Application";
+            name = "MPV Media Player";
+            noDisplay = true;
+        };
+        "nixos-manual" = {
+            type = "Application";
+            name = "NixOS Manual";
+            noDisplay = true;
+        };
+        "nvidia-settings" = {
+            type = "Application";
+            name = "NVIDIA X Server Settings";
+            noDisplay = true;
+        };
+        uuctl = {
+            type = "Application";
+            name = "uuctl";
+            noDisplay = true;
         };
     };
 }

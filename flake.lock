@@ -41,8 +41,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1790157388,
-        "narHash": "sha256-CO1aryDTEni+J4rxiYQBgKVqOTtKE1pUjULpT9Ep3Xw=",
+        "lastModified": 1790590280,
+        "narHash": "sha256-YqbkpPemUW8UOxVZ9pN/K8ja3fwOgVCHnksZy/Umkn8=",
         "path": "/home/quisiou/Dotfiles",
         "type": "path"
       },
@@ -566,11 +566,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1787135253,
-        "narHash": "sha256-RD2kNWCG+Bjo6h+JVjWVNntZs2GtRoeY2xHjts/FNkA=",
+        "lastModified": 1790463110,
+        "narHash": "sha256-hKlVl12B1dF0Q5vd9dY3lIJM5mFGWYSlXwSLAqHZ1+s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ffb3c9b700e759be2ef13237c9d8f953b32a1e46",
+        "rev": "e158d9ed9b51c98974c5e66e1ba1c9e0255fecaa",
         "type": "github"
       },
       "original": {
