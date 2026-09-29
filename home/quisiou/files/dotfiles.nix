@@ -8,7 +8,7 @@ let
 in
 {
     home.file = {
-        "${configDir}/quickshell/shell/quickapps.json".text = ''
+        "${configDir}/quickshell/quickapps.json".text = ''
             [
                 "codium",
                 "firefox",
