@@ -114,5 +114,13 @@ in
                 float = true
             })
         '';
+
+        "${configDir}/hypr/user/env.lua".text = ''
+            -- hypr/user/env.lua
+
+
+            ----- USER'S CUSTOM ENVIRONMENT VARIABLES CONFIGURATION --------------------------- #
+            hl.env("TZDIR", "/etc/zoneinfo")
+        '';
     };
 }
