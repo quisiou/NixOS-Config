@@ -223,18 +223,12 @@ in
                 # append = true;
             };
             profileExtra = ''
-                # Source default profile config
+                # Source profile config
                 [ -f "$HOME/.config/zsh/profile.zsh" ] && . "$HOME/.config/zsh/profile.zsh"
-
-                # Source user profile config
-                [ -f "$HOME/.config/zsh/user/profile.zsh" ] && . "$HOME/.config/zsh/user/profile.zsh"
             '';
             envExtra = ''
-                # Source default environment variables
+                # Source environment variables
                 [ -f "$HOME/.config/zsh/env.zsh" ] && . "$HOME/.config/zsh/env.zsh"
-
-                # Source personal environment variables
-                [ -f "$HOME/.config/zsh/user/env.zsh" ] && . "$HOME/.config/zsh/user/env.zsh"
             '';
             initContent = ''
                 # Fix kitty allways prompting for close confirmation
@@ -245,11 +239,8 @@ in
                     unfunction kitty-integration
                 fi
 
-                # Source default main config
+                # Source main config
                 [ -f "$HOME/.config/zsh/main.zsh" ] && . "$HOME/.config/zsh/main.zsh"
-
-                # Source user main config
-                [ -f "$HOME/.config/zsh/user/main.zsh" ] && . "$HOME/.config/zsh/user/main.zsh"
 
                 # The fuck
                 eval "$(pay-respects zsh)"
