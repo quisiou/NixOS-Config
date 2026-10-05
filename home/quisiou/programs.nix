@@ -266,13 +266,17 @@ in
                 searchDownKey = [ "^[[B" "^[OB" ];
             };
             history = {
-                size = 10000;
+                size = 12000;
                 save = 10000;
+                path = "${config.home.homeDirectory}/.zsh_history";
                 ignoreDups = true;
+                ignoreAllDups = true;   # remove older duplicate when a repeat is entered
+                ignoreSpace = true;     # commands starting with a space aren't saved
                 findNoDups = true;
+                saveNoDups = true;      # don't write duplicates to the history file
                 extended = true;
-                share = true; # Share history between sessions
-                # append = true;
+                share = true;
+                expireDuplicatesFirst = true;
             };
             profileExtra = ''
                 # Source profile config
