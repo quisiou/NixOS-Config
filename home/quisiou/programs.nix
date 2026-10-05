@@ -42,10 +42,24 @@ let
 in
 {
     programs = {
+        bat = {
+            enable = true;
+            config = {
+                theme = "TwoDark";
+                style = "numbers,changes";
+            };
+            extraPackages = with pkgs.bat-extras; [ batman batgrep ];
+        };
         direnv = {
             enable = true;
             enableZshIntegration = true;
             nix-direnv.enable = true;
+        };
+        eza = {     ## ls, but better
+            enable = true;
+            enableZshIntegration = true;  # sets up ls, ll, la, lt, lla aliases
+            icons = "auto";
+            git = true;
         };
         firefox = {
             enable = true;
@@ -91,6 +105,25 @@ in
                         ];
                     }];
                 };
+            };
+        };
+        fzf = {
+            enable = true;
+            enableZshIntegration = true;
+
+            defaultCommand = "fd --type f --hidden --exclude .git";
+            defaultOptions = [ "--height 40%" "--layout=reverse" "--border" ];
+
+            # Ctrl + t
+            fileWidget = {
+                command = "fd --type f --hidden --exclude .git";
+                options = [ "--preview 'bat --color=always --line-range :200 {}'" ];
+            };
+
+            # Alt + c
+            changeDirWidget = {
+                command = "fd --type d --hidden --exclude .git";
+                options = [ "--preview 'eza --tree --level=2 --color=always {}'" ];
             };
         };
         gh = {
@@ -205,13 +238,32 @@ in
                 eww-yuck.yuck
             ]);
         };
+        zoxide = {
+            enable = true;
+            enableZshIntegration = true;
+            options = [ "--cmd cd" ];
+        };
         zsh = {
             enable = true;
+
+            defaultKeymap = "emacs";
+
             enableCompletion = true;
+            autosuggestion.enable = true;
+            syntaxHighlighting.enable = true;
+
+            autocd = true;
+
             shellAliases = {
                 "nrs"       =   "sudo nixos-rebuild switch    --flake /etc/nixos#chirimbolo";
                 "nrb"       =   "sudo nixos-rebuild dry-build --flake /etc/nixos#chirimbolo";
                 "uvinit"    =   "uv init && uv venv --seed && uv add ipykernel jupyter";
+            };
+
+            historySubstringSearch = {
+                enable = true;
+                searchUpKey = [ "^[[A" "^[OA" ];
+                searchDownKey = [ "^[[B" "^[OB" ];
             };
             history = {
                 size = 10000;

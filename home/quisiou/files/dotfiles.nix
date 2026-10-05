@@ -10,11 +10,11 @@ in
     home.file = {
         "${configDir}/quickshell/quickapps.json".text = ''
             [
-                "codium",
+                "steam",
                 "firefox",
                 "vesktop",
-                "steam",
                 "gimp",
+                "zulip",
                 "org.inkscape.Inkscape",
                 "spotify",
                 "org.musescore.MuseScore"

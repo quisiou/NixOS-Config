@@ -50,6 +50,11 @@ let
                     name = "open in octo";
                     command = ''nvim -c "lua require('lazy').load({plugins={'octo.nvim'}})" -c "e octo://{{.RepoName}}/issue/{{.IssueNumber}}"'';
                 }
+                {
+                    key = "S";
+                    name = "create sub-issue";
+                    command = ''gh issue create --parent "{{.IssueNumber}}" --repo "{{.RepoName}}"'';
+                }
             ];
             prs = [
                 {

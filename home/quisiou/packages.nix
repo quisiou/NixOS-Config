@@ -6,7 +6,7 @@
 {
     home.packages = with pkgs; [
         # Basic terminal utilities
-        file bat duf dust tree ffmpeg fd ripgrep fzf zoxide resvg imagemagick
+        file duf dust tree ffmpeg fd ripgrep resvg imagemagick
         _7zz-rar
         jq yq-go crudini poppler
         pay-respects # thefuck
