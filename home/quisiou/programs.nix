@@ -258,6 +258,7 @@ in
                 "nrs"       =   "sudo nixos-rebuild switch    --flake /etc/nixos#chirimbolo";
                 "nrb"       =   "sudo nixos-rebuild dry-build --flake /etc/nixos#chirimbolo";
                 "uvinit"    =   "uv init && uv venv --seed && uv add ipykernel jupyter";
+                "man"       =   "batman";
             };
 
             historySubstringSearch = {

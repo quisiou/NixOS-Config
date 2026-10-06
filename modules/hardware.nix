@@ -9,5 +9,6 @@
         steam-hardware.enable = true;
         uinput.enable = true;
         alsa.enablePersistence = true;
+        sane.enable = true;
     };
 }
