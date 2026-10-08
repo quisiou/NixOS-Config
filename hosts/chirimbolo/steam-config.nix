@@ -1,4 +1,4 @@
-# hosts/chirimbolo/steam-games.nix
+# hosts/chirimbolo/steam-config.nix
 
 { pkgs, config, ... }:
 
@@ -6,15 +6,16 @@
     programs.steam.config = {
         enable = true;
         onSteamRunning = "close";
+        desktopUiScale = 1.6;
         apps = {
-            "Geometry Dash" = {
-                id = 322170;
+            "322170" = {
+                name = "Geometry Dash";
                 compatTool = pkgs.ge-proton9-24;
                 env.WINEDLLOVERRIDES = "xinput1_4=n,b";
             };
 
-            "Rocket League" = {
-                id = 252950;
+            "252950" = {
+                name = "Rocket League";
                 compatTool = pkgs.ge-proton9-24;
                 env = {
                     WINEDLLOVERRIDES = "winmm=n,b";
@@ -28,8 +29,8 @@
                 args = [ "-NoIPv6" ];
             };
 
-            "The Witcher 3" = {
-                id = 292030;
+            "292030" = {
+                name = "The Witcher 3";
                 compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
@@ -42,12 +43,12 @@
                 wrappers = [ "gamemoderun" ];
             };
 
-            "God of War" = {
+            "1593500" = {
                 # To fix Dualsense not getting detected, add this to
                 # ~/.steam/steam/steamapps/compatdata/1593500/pfx/system.reg:
                 # [System\\ControlSet001\\Services\\winebus] 1767307594
                 # "DisableHidraw"=dword:00000001
-                id = 1593500;
+                name = "God of War";
                 compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
@@ -62,8 +63,8 @@
                 # '';
             };
 
-            "Devil May Cry HD Collection" = {
-                id = 631510;
+            "631510" = {
+                name = "Devil May Cry HD Collection";
                 compatTool = pkgs.ge-proton10-17;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
@@ -77,8 +78,8 @@
                 # '';
             };
 
-            "Darksiders Warmastered Edition" = {
-                id = 462780;
+            "462780" = {
+                name = "Darksiders Warmastered Edition";
                 compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
@@ -89,8 +90,8 @@
                 wrappers = [ "gamemoderun" ];
             };
 
-            "Darksiders II Deathinitive Edition" = {
-                id = 388410;
+            "388410" = {
+                name = "Darksiders II Deathinitive Edition";
                 compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
@@ -101,8 +102,8 @@
                 wrappers = [ "gamemoderun" ];
             };
 
-            "Darksiders III" = {
-                id = 606280;
+            "606280" = {
+                name = "Darksiders III";
                 compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
@@ -114,8 +115,8 @@
                 wrappers = [ "gamemoderun" ];
             };
 
-            "Darksiders Genesis" = {
-                id = 710920;
+            "710920" = {
+                name = "Darksiders Genesis";
                 compatTool = pkgs.ge-proton11-7;
                 env = {
                     __NV_PRIME_RENDER_OFFLOAD = 1;
