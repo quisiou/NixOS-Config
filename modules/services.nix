@@ -33,6 +33,10 @@
                 # Keyboard: Razer Cynosa V2
                 allow id 1532:025e
 
+                # Multiple USB terminal
+                allow id 2109:0813 serial "" name "USB3.0 Hub             " hash "b4K1yl7/cMJlWBmqjIIIokgCe1wIU6PWJiRoLg98fss=" with-interface 09:00:00 with-connect-type "hotplug"
+                allow id 2109:2813 serial "" name "USB2.0 Hub             " hash "l1G6zfUAeMK5Gx3zXNbqphTLILlTO3wMAFWeg6JDP9w=" with-interface 09:00:00 with-connect-type "hotplug"
+
                 # Internal wireless module
                 allow id 13d3:3607
 
