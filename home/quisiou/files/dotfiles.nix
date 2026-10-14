@@ -28,7 +28,7 @@ in
             ----- USER'S CUSTOM KEYBINDS CONFIGURATION --------------------------- #
             hl.bind(
                 "ALT + F8",
-                hl.dsp.exec_cmd("pkill -SIGUSR1 -f 'gpu-screen-recorder -w'")
+                hl.dsp.exec_cmd("systemctl --user kill -s SIGUSR1 --kill-whom=main 'gsr-replay@*.service'")
             )
 
             hl.unbind(

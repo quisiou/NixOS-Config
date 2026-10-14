@@ -3,6 +3,18 @@
 
 { config, pkgs, ... }:
 
+let
+    gsrNotify = pkgs.writeShellScript "gsr-notify" ''
+        file="$1"
+        type="$2"
+        if [ "$type" = "replay" ] && [ -f "$file" ]; then
+            ${pkgs.libnotify}/bin/notify-send \
+            -a gpu-screen-recorder \
+            -i "${pkgs.gpu-screen-recorder-gtk}/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png" \
+            "Replay saved!" "$(basename "$file")"
+        fi
+    '';
+in
 {
     services.ssh-agent.enable = true;
 
@@ -19,6 +31,7 @@
                     -w eDP-1 \
                     -a default_output -ac opus \
                     -q very_high -k av1_10bit -cr limited -f 120 -fm cfr \
+                    -sc ${gsrNotify} \
                     -o "%h/Videos/Clips/" -c mp4 -r %i
                 '';
             };
