@@ -43,6 +43,7 @@ in
 
                 minegrub-world-sel = {
                     enable = true;
+                    background = "assets/background-scaled/background-2560x1600.png";
                     customIcons = with config.system; [
                         {
                             inherit name;
@@ -71,11 +72,6 @@ in
                     # --- theme placement ---
                     ${pkgs.coreutils}/bin/mkdir -p "$GRUB_DIR/themes/minegrub"
                     ${pkgs.coreutils}/bin/cp -a ${minegrubTheme}/grub/themes/minegrub/. "$GRUB_DIR/themes/minegrub/"
-
-                    SCALED_BG="${inputs.minegrub-world-sel-theme}/assets/background-scaled/background-2560x1600.png"
-                    if [ -f "$SCALED_BG" ]; then
-                        ${pkgs.coreutils}/bin/cp -f "$SCALED_BG" "/boot/theme/background.png"
-                    fi
 
                     CFG="$GRUB_DIR/grub.cfg"
 
