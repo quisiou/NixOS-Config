@@ -1,8 +1,11 @@
 # hosts/chirimbolo/configuration.nix
 
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
+let
+    hyprPkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in
 {
     imports = [
         # Include the results of the hardware scan.
@@ -60,9 +63,9 @@
         graphics = {
             enable = true;
             enable32Bit = true;
-            extraPackages = with pkgs; [
-                rocmPackages.clr.icd
-            ];
+            package = hyprPkgs.mesa;
+            package32 = hyprPkgs.pkgsi686Linux.mesa;
+            extraPackages = with pkgs; [ rocmPackages.clr.icd ];
         };
     };
 

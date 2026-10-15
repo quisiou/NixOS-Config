@@ -42,9 +42,6 @@ let
         trap 'exit 143' TERM
         trap 'exit 130' INT
 
-        CONFIG_JSON="${config.home.homeDirectory}/.config/vesktop/settings.json"
-
-        jq '.tray = true' "$CONFIG_JSON" > tmp.json && mv tmp.json "$CONFIG_JSON"
         systemctl --user start vesktop-overlay.service
 
         ${pkgs.vesktop}/bin/vesktop "$@"
