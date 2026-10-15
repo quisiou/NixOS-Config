@@ -14,6 +14,7 @@
         };
 
         hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
+
         hyprtasking = {
             url = "github:raybbian/hyprtasking";
             inputs.hyprland.follows = "hyprland";
