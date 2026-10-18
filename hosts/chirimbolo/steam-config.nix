@@ -10,7 +10,7 @@
         apps = {
             "322170" = {
                 name = "Geometry Dash";
-                compatTool = pkgs.ge-proton9-24;
+                compatTool = pkgs.ge-proton11-7;
                 env.WINEDLLOVERRIDES = "xinput1_4=n,b";
             };
 

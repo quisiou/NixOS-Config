@@ -72,5 +72,6 @@
         bitwarden-desktop
         qbittorrent
         zulip
+        heroic
     ];
 }
