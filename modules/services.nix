@@ -41,7 +41,7 @@
 
                 # Mobile phones
                 allow id 04e8:6860 serial "RFCNC0KKQNW" name "SAMSUNG_Android" hash "PUWwolipQf06yemGCcBMe9IWS9iyjnZMZWvt/YSxFPE=" with-interface { 06:01:01 02:02:01 0a:00:00 ff:40:02 ff:42:01 } with-connect-type "hotplug"
-                allow id 2717:ff40 serial "34b69ac8" name "REDMI Note 17 Pro 5G" hash "fU5CnCzwj1kRY6DAt8n994u6/v7edlIsNEYkng5Si5Y=" with-interface 06:01:01 with-connect-type "hotplug"
+                allow id 2717:ff08 serial "34b69ac8" name "REDMI Note 17 Pro 5G" hash "8qbiF9s6cgEWfIfAQIklguE62QX9s9BruVzPvG2KCbo=" with-interface ff:42:01 with-connect-type "hotplug"
 
                 # Internal wireless module
                 allow id 13d3:3607
