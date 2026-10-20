@@ -20,6 +20,11 @@
             inputs.hyprland.follows = "hyprland";
         };
 
+        hypr-dynamic-cursors = {
+            url = "github:VirtCode/hypr-dynamic-cursors/f5ba36c";
+            inputs.hyprland.follows = "hyprland";
+        };
+
         nix-vscode-extensions = {
             url = "github:nix-community/nix-vscode-extensions";
             inputs.nixpkgs.follows = "nixpkgs";
