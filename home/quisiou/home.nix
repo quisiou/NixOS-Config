@@ -13,7 +13,6 @@
         ./themes.nix
         ./timers.nix
         ./variables.nix
-        ./wayland.nix
         ./xdg-desktop.nix
         ./xdg-mime.nix
 
