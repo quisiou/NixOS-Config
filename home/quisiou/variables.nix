@@ -5,6 +5,8 @@
 
 {
     home.sessionVariables = {
+        EDITOR                          =   "nvim";
+        VISUAL                          =   "nvim";
         XDG_CACHE_HOME                  =   "${config.home.homeDirectory}/.cache";
         STEAM_EXTRA_COMPAT_TOOLS_PATHS  =   "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
         UV_PYTHON_PREFERENCE            =   "only-managed";

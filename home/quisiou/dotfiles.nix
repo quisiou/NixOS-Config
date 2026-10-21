@@ -1,7 +1,7 @@
 # home/quisiou/dotfiles.nix
 
 
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, config, ... }:
 
 {
     programs.dotfiles = {
@@ -191,6 +191,13 @@
             };
             kitty = {
                 enable = true;
+            };
+            nvim = {
+                enable = true;
+                lockfile = "${config.home.homeDirectory}/Dotfiles/nvim/lazy-lock.json";
+                extraPackages = [
+                    (pkgs.python3.withPackages (ps: with ps; [ jupytext pylatexenc ]))
+                ];
             };
             yazi = {
                 enable = true;

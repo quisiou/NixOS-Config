@@ -164,26 +164,6 @@ in
             enable = true;
             config.hwdec = "auto";
         };
-        neovim = {
-            enable = true;
-            defaultEditor = true;
-
-            viAlias = true;
-            vimAlias = true;
-
-            extraPackages = with pkgs; [
-                (python3.withPackages (ps: with ps; [
-                    jupytext
-                    pylatexenc
-                ]))
-            ];
-
-            initLua = ''
-                require("options")
-                require("keymaps")
-                require("lazy-config")
-            '';
-        };
         starship = {
             enable = true;
             enableZshIntegration = true;
