@@ -9,6 +9,9 @@
         allEnabled = false;
 
         modules = {
+            fastfetch = {
+                enable = true;
+            };
             hypr = {
                 enable = true;
                 package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -198,6 +201,9 @@
                 extraPackages = [
                     (pkgs.python3.withPackages (ps: with ps; [ jupytext pylatexenc ]))
                 ];
+            };
+            starship = {
+                enable = true;
             };
             yazi = {
                 enable = true;
