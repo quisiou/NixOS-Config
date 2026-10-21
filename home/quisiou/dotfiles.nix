@@ -83,7 +83,7 @@
                                 -- rotate  - rotate the cursor based on movement direction
                                 -- stretch - stretch the cursor shape based on direction and velocity
                                 -- none    - do not change the cursor's behaviour
-                                mode = "rotate",
+                                mode = "stretch",
 
                                 -- minimum angle difference in degrees after which the shape is changed
                                 -- smaller values are smoother, but more expensive for hw cursors
@@ -133,7 +133,7 @@
                                     -- quadratic          - a quadratic function is used
                                     -- negative_quadratic - negative version of the quadratic one, feels more aggressive
                                     -- see `activation` in `src/mode/utils.cpp` for how exactly the calculation is done
-                                    activation = "quadratic",
+                                    activation = "negative_quadratic",
 
                                     -- time window (ms) over which the speed is calculated
                                     -- higher values will make slow motions smoother but more delayed
