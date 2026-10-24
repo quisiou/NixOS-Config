@@ -6,18 +6,11 @@
 {
     programs.dotfiles = {
         enable = true;
-        allEnabled = false;
+        defaultEnabled = true;
 
         modules = {
-            btop = {
-                enable = true;
-                preset = 0;
-            };
-            fastfetch = {
-                enable = true;
-            };
+            btop.preset = 0;
             hypr = {
-                enable = true;
                 package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
                 extraEnv = ''
                     hl.env("TZDIR", "/etc/zoneinfo")
@@ -186,21 +179,15 @@
                     inputs.hypr-dynamic-cursors.packages.${pkgs.stdenv.hostPlatform.system}.hypr-dynamic-cursors
                 ];
             };
-            kitty = {
-                enable = true;
-            };
             nvim = {
-                enable = true;
                 lockfile = "${config.home.homeDirectory}/Dotfiles/nvim/lazy-lock.json";
                 extraPackages = [
                     (pkgs.python3.withPackages (ps: with ps; [ jupytext pylatexenc ]))
                 ];
             };
-            starship = {
-                enable = true;
-            };
+            quickshell.enable = false;
+            vscodium.enable = false;
             yazi = {
-                enable = true;
                 extraKeymaps = ''
                     [[mgr.prepend_keymap]]
                     on   = [ "g", "D" ]
@@ -219,7 +206,6 @@
                 '';
             };
             zsh = {
-                enable = true;
                 linkRcFiles = false;
                 extraAlias = ''
                     alias nrs="sudo nixos-rebuild switch    --flake /etc/nixos#chirimbolo"
