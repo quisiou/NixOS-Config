@@ -9,6 +9,7 @@
         file duf dust tree ffmpeg fd ripgrep resvg imagemagick
         _7zz-rar
         jq yq-go crudini poppler
+        psmisc xwayland-satellite
         pay-respects # thefuck
 
         # More relevant terminal utils
@@ -44,7 +45,7 @@
         btop brightnessctl
 
         # Desktop ecosystem
-        hyprshot wl-clipboard cliphist
+        hyprshot wl-clipboard cliphist wl-freeze
         awww eww quickshell
         wlopm
         playerctl

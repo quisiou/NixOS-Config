@@ -21,6 +21,8 @@
                         hl.dsp.exec_cmd("systemctl --user kill -s SIGUSR1 --kill-whom=main 'gsr-replay@*.service'")
                     )
 
+                    hl.bind(Config.mainMod .. " + F5", hl.dsp.exec_cmd("wl-freeze -a"))
+
                     hl.unbind(
                         Config.mainMod .. " + L",
                         hl.dsp.exec_cmd("qs -c shell ipc call controlMenu lockSession")
