@@ -205,6 +205,21 @@
                     on   = [ "g", "n" ]
                     run  = "cd ~/NixOS-Config"
                     desc = "Go to NixOS Configuration"
+
+                    [[mgr.prepend_keymap]]
+                    on   = "<C-t>"
+                    run  = 'shell --orphan -- kitty --directory "$(pwd)"'
+                    desc = "Open kitty in current directory"
+
+                    [[mgr.prepend_keymap]]
+                    on   = "<C-g>"
+                    run  = 'shell --block -- lazygit'
+                    desc = "Open lazygit in current directory"
+
+                    [[mgr.prepend_keymap]]
+                    on   = "<C-o>"
+                    run  = 'shell --block -- ''${EDITOR:-vi} .'
+                    desc = "Open current directory in $EDITOR"
                 '';
             };
             zsh = {
