@@ -13,7 +13,10 @@
             inputs.nixpkgs.follows = "nixpkgs";   # Avoids a second nixpkgs evaluation
         };
 
-        hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
+        hyprland = {
+            url = "github:hyprwm/Hyprland/v0.56.2";
+            inputs.nixpkgs.url = "github:NixOS/nixpkgs/61b7c44c4073f0b827768aff0049561b5110ea5a";
+        };
 
         hyprtasking = {
             url = "github:raybbian/hyprtasking";
@@ -21,7 +24,7 @@
         };
 
         hypr-dynamic-cursors = {
-            url = "github:VirtCode/hypr-dynamic-cursors/f5ba36c";
+            url = "github:VirtCode/hypr-dynamic-cursors/5a224284872208b5324759d535d65061043725de";
             inputs.hyprland.follows = "hyprland";
         };
 
