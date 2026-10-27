@@ -1,7 +1,7 @@
 # home/quisiou/packages.nix
 
 
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
     home.packages = with pkgs; [
@@ -61,7 +61,9 @@
         # Other stuff
         bitwarden-desktop
         qbittorrent
-        zulip
         heroic
+        zulip
+    ] ++ [
+        inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.zotero
     ];
 }
