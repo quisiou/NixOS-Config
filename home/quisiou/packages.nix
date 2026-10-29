@@ -24,6 +24,7 @@
 
         # Image editors and viewers
         gimp inkscape imv
+        upscayl
 
         # Other editors
         blender

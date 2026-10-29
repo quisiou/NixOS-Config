@@ -79,18 +79,13 @@ in
                         toolbar = true;
                         bookmarks = [
                             {
-                                name = "NixOS";
-                                bookmarks = [
-                                    {
-                                        name = "Search";
-                                        url = "https://search.nixos.org";
-                                    }
-                                    {
-                                        name = "Home Manager";
-                                        tags = [ "home" "manager" ];
-                                        url = "https://nix-community.github.io/home-manager/options/home-manager/";
-                                    }
-                                ];
+                                name = "Search";
+                                url = "https://search.nixos.org";
+                            }
+                            {
+                                name = "Home Manager";
+                                tags = [ "home" "manager" ];
+                                url = "https://nix-community.github.io/home-manager/options/home-manager/";
                             }
                             "separator"
                             {
