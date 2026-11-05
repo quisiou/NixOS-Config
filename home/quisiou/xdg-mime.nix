@@ -13,6 +13,7 @@
             "x-scheme-handler/https"    = [ "firefox.desktop" ];
             "image/png"                 = [ "imv.desktop" ];
             "image/jpeg"                = [ "imv.desktop" ];
+            "image/svg+xml"             = [ "org.inkscape.Inkscape.desktop" ];
             "video/mp4"                 = [ "mpv.desktop" ];
             "text/plain"                = [ "nvim.desktop" ];
             "text/script.python"        = [ "nvim.desktop" ];

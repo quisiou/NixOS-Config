@@ -87,6 +87,9 @@ in
 
                     # Track the main branch without overwriting pre-existing untracked files
                     run "${gitExec}" -C "${dotsDir}" checkout -b main origin/main || run "${gitExec}" -C "${dotsDir}" checkout main
+
+                    # Fetch the plugin submodules
+                    run "${gitExec}" -C "${dotsDir}" submodule update --init --recursive
                 fi
             )
         '';

@@ -60,7 +60,7 @@
         lua-language-server vim-language-server nixd marksman bash-language-server shellcheck basedpyright ruff
 
         # Other stuff
-        bitwarden-desktop
+        bitwarden-desktop bitwarden-cli
         qbittorrent
         heroic
         zulip
