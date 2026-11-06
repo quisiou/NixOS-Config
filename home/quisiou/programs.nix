@@ -159,6 +159,16 @@ in
             enable = true;
             config.hwdec = "auto";
         };
+        ssh = {
+            enable = true;
+            enableDefaultConfig = false;
+
+            settings = {
+                "*" = {
+                    AddKeysToAgent = "yes";
+                };
+            };
+        };
         starship = {
             enable = true;
             enableZshIntegration = true;

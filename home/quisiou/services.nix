@@ -16,7 +16,10 @@ let
     '';
 in
 {
-    services.ssh-agent.enable = true;
+    services.ssh-agent = {
+        enable = true;
+        defaultMaximumIdentityLifetime = 3600;  # 3600s = 1h
+    };
 
     systemd.user.services = {
         "gsr-replay@" = {
