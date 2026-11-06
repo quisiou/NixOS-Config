@@ -41,8 +41,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1793967454,
-        "narHash": "sha256-nNuKsb7fqmrZ2u/5D/mm0De4obzpSV2glP7AjamOEiY=",
+        "lastModified": 1793986093,
+        "narHash": "sha256-HeSKUwnX1DywtA/uEwUdfvcTnKxSuQvJEZDx1N9oMM0=",
         "path": "/home/quisiou/Dotfiles",
         "type": "path"
       },
@@ -652,7 +652,8 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
-        "steam-config-nix": "steam-config-nix"
+        "steam-config-nix": "steam-config-nix",
+        "yazi-plugins": "yazi-plugins"
       }
     },
     "steam-config-nix": {
@@ -775,6 +776,22 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "yazi-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793904305,
+        "narHash": "sha256-Wf10m6iY4xWKALLFQBOz1vgGXOQpPzryPnFS+s40QFg=",
+        "owner": "yazi-rs",
+        "repo": "plugins",
+        "rev": "c0529fc34e4649effb79ff6f4a86aec46beebb7f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yazi-rs",
+        "repo": "plugins",
         "type": "github"
       }
     }

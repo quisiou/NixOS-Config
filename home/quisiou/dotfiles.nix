@@ -220,7 +220,15 @@
                     on   = "<C-o>"
                     run  = 'shell --block -- ''${EDITOR:-vi} .'
                     desc = "Open current directory in $EDITOR"
+
+                    [[mgr.prepend_keymap]]
+                    on   = "M"
+                    run  = "plugin mount"
+                    desc = "Manage mounted devices"
                 '';
+                extraPlugins = {
+                    mount = { src = inputs.yazi-plugins; subdir = "mount.yazi"; };
+                };
             };
             zsh = {
                 linkRcFiles = false;

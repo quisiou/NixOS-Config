@@ -52,6 +52,11 @@
             url = "path:/home/quisiou/Dotfiles";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        yazi-plugins = {
+            url = "github:yazi-rs/plugins";
+            flake = false;
+        };
     };
 
     outputs = inputs @ { self, nixpkgs, home-manager, nix-vscode-extensions, steam-config-nix, ... }: {
