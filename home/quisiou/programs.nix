@@ -35,6 +35,9 @@ let
 
         cargoHash = "sha256-zlX2ooybGYX1vnl9ajGZhN5nDQ/QyqmSH4uwXbD/cBk=";
 
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildInputs = [ pkgs.oniguruma ];
+
         postPatch = ''
             cp ${schemaGraphql} schema.graphql
         '';
@@ -123,7 +126,7 @@ in
         };
         gh = {
             enable = true;
-
+            extensions = [ gh-board ];
             settings = {
                 git_protocol = "ssh";
                 prompt = "enabled";
@@ -132,12 +135,9 @@ in
                 accessible_colors = "disabled";
                 accessible_prompter = "disabled";
                 spinner = "enabled";
-
                 aliases = {
                     co = "pr checkout";
                 };
-
-            extensions = [ gh-board ];
             };
         };
         git = {
