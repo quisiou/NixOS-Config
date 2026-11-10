@@ -234,7 +234,7 @@
                 linkRcFiles = false;
                 extraAlias = ''
                     alias nrs="sudo nixos-rebuild switch    --flake /etc/nixos#chirimbolo"
-                    alias nrb="sudo nixos-rebuild dry-build --flake /etc/nixos#chirimbolo"
+                    alias nrb="sudo nixos-rebuild build     --flake /etc/nixos#chirimbolo"
                     alias uvinit="uv init && uv venv --seed && uv add ipykernel jupyter"
                     alias man="batman"
                 '';

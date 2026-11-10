@@ -14,8 +14,8 @@
         };
 
         hyprland = {
-            url = "github:hyprwm/Hyprland/v0.56.2";
-            inputs.nixpkgs.url = "github:NixOS/nixpkgs/61b7c44c4073f0b827768aff0049561b5110ea5a";
+            url = "github:hyprwm/Hyprland/v0.57.0";
+            # inputs.nixpkgs.url = "github:NixOS/nixpkgs/61b7c44c4073f0b827768aff0049561b5110ea5a";
         };
 
         hyprtasking = {
@@ -24,7 +24,8 @@
         };
 
         hypr-dynamic-cursors = {
-            url = "github:VirtCode/hypr-dynamic-cursors/5a224284872208b5324759d535d65061043725de";
+            # url = "github:VirtCode/hypr-dynamic-cursors/5a224284872208b5324759d535d65061043725de";
+            url = "github:VirtCode/hypr-dynamic-cursors";
             inputs.hyprland.follows = "hyprland";
         };
 
