@@ -134,7 +134,10 @@ in
         kernelPackages = pkgs.linuxPackages_latest;
 
         kernel.sysctl = { "kernel.printk" = "3 4 1 3"; };
-        kernelParams = [ "loglevel=3" ];
+        kernelParams = [
+            "loglevel=3"
+            "amdgpu.dcdebugmask=0x40000"
+        ];
         kernelModules = [
             "hid_playstation"
         ];
