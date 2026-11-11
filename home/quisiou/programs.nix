@@ -201,6 +201,7 @@ in
             (with pkgs.vscode-extensions; [
                 llvm-vs-code-extensions.vscode-clangd
                 twxs.cmake
+                mkhl.direnv
                 ms-toolsai.jupyter
                 ms-toolsai.jupyter-renderers
                 ms-toolsai.vscode-jupyter-cell-tags
