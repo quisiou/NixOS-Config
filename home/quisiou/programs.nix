@@ -157,7 +157,10 @@ in
         };
         mpv = {
             enable = true;
-            config.hwdec = "auto";
+            config = {
+                hwdec = "auto";
+                gpu-api = "opengl";
+            };
         };
         ssh = {
             enable = true;
