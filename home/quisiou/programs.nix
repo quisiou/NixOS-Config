@@ -160,6 +160,9 @@ in
             config = {
                 hwdec = "auto";
                 gpu-api = "opengl";
+                # gpu-api = "vulkan";
+                # vulkan-device = "AMD Radeon 780M Graphics (RADV PHOENIX)";
+                # hwdec = "vaapi";
             };
         };
         ssh = {

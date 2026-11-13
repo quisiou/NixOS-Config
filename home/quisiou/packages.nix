@@ -64,6 +64,7 @@
         qbittorrent
         heroic
         zulip
+        polychromatic
     ] ++ [
         inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.zotero
     ];
