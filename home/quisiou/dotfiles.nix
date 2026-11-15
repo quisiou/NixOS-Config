@@ -16,32 +16,58 @@
                     hl.env("TZDIR", "/etc/zoneinfo")
                 '';
                 extraKeybinds = ''
-                    hl.bind(
+                    BIND(
                         "ALT + F8",
-                        hl.dsp.exec_cmd("systemctl --user kill -s SIGUSR1 --kill-whom=main 'gsr-replay@*.service'")
+                        hl.dsp.exec_cmd("systemctl --user kill -s SIGUSR1 --kill-whom=main 'gsr-replay@*.service'"),
+                        { description = "[Apps] Save clip" }
                     )
 
-                    hl.bind(Config.mainMod .. " + F5", hl.dsp.exec_cmd("wl-freeze -a"))
-
-                    hl.unbind(
-                        Config.mainMod .. " + L",
-                        hl.dsp.exec_cmd("qs -c shell ipc call controlMenu lockSession")
+                    BIND(
+                        Config.mainMod .. " + F3",
+                        hl.dsp.exec_cmd("wl-freeze -a"),
+                        { description = "[Apps] Freeze current process" }
                     )
+
+                    hl.unbind(Config.mainMod .. " + L")
 
                     -- hyprtasking
-                    hl.bind(Config.mainMod .. " + Tab", function() hl.plugin.hyprtasking.toggle("cursor") end)
+                    BIND(
+                        Config.mainMod .. " + Tab",
+                        function() hl.plugin.hyprtasking.toggle("cursor") end,
+                        { description = "[Workspace] Toggle overview" }
+                    )
 
                     -- escape closes the overview if it's open
-                    hl.bind("escape", function()
-                    if hl.plugin.hyprtasking.is_active() then
-                        hl.plugin.hyprtasking.toggle('all')
-                    end
-                    end, { non_consuming = true })
+                    BIND(
+                        "escape",
+                        function()
+                            if hl.plugin.hyprtasking.is_active() then
+                                hl.plugin.hyprtasking.toggle('all')
+                            end
+                        end,
+                        { non_consuming = true, description = "[Workspace] Close overview" }
+                    )
 
-                    hl.bind("SUPER + H", function() hl.plugin.hyprtasking.move("left") end)
-                    hl.bind("SUPER + J", function() hl.plugin.hyprtasking.move("down") end)
-                    hl.bind("SUPER + K", function() hl.plugin.hyprtasking.move("up") end)
-                    hl.bind("SUPER + L", function() hl.plugin.hyprtasking.move("right") end)
+                    BIND(
+                        Config.mainMod .. " + H",
+                        function() hl.plugin.hyprtasking.move("left") end,
+                        { description = "[Workspace] Go left" }
+                    )
+                    BIND(
+                        Config.mainMod .. " + J",
+                        function() hl.plugin.hyprtasking.move("down") end,
+                        { description = "[Workspace] Go down" }
+                    )
+                    BIND(
+                        Config.mainMod .. " + K",
+                        function() hl.plugin.hyprtasking.move("up") end,
+                        { description = "[Workspace] Go up" }
+                    )
+                    BIND(
+                        Config.mainMod .. " + L",
+                        function() hl.plugin.hyprtasking.move("right") end,
+                        { description = "[Workspace] Go right" }
+                    )
                 '';
                 extraLookAndFeel = ''
                     hl.config({
@@ -225,6 +251,11 @@
                     on   = "M"
                     run  = "plugin mount"
                     desc = "Manage mounted devices"
+
+                    [[mgr.prepend_keymap]]
+                    on   = [ "g", "S" ]
+                    run  = "cd sftp://idril"
+                    desc = "Go to idril"
                 '';
                 extraPlugins = {
                     mount = { src = inputs.yazi-plugins; subdir = "mount.yazi"; };
