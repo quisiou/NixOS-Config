@@ -10,6 +10,7 @@
         _7zz-rar
         jq yq-go crudini poppler
         psmisc xwayland-satellite
+        mesa-demos
         pay-respects # thefuck
 
         # More relevant terminal utils
