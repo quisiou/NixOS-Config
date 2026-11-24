@@ -24,7 +24,7 @@
                     )
 
                     BIND(
-                        Config.mainMod .. " + F3",
+                        Config.mainMod .. " + F5",
                         hl.dsp.exec_cmd("wl-freeze -a"),
                         { description = "[Apps] Freeze current process" }
                     )
